@@ -1,0 +1,64 @@
+.address_heading {
+  margin-left: 13px;
+  color: #5d5d5d;
+}
+.addr_card {
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  margin: 5px 10px;
+  padding: 10px 20px;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 3px 5px 7px 4px rgb(140 139 127);
+  color: balack;
+  color: #696d71;
+  font: -webkit-mini-control;
+}
+.card h2,
+.card p,
+.card address {
+  text-transform: capitalize;
+}
+.addIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 100%;
+  cursor: pointer;
+  box-shadow: 1px 3px 7px 3px rgb(140 139 127);
+}
+
+.isize {
+  font-weight: 700;
+  font-size: 2rem !important;
+}
+.card_action {
+  float: right;
+  display: flex;
+
+  cursor: pointer;
+}
+.addIconMob {
+  display: none;
+}
+@media screen and (max-width: 480px) {
+  .addIcon {
+    display: none;
+  }
+  .addr_card {
+    display: flow-root;
+  }
+  .card {
+    border-radius: 0;
+  }
+  .addIconMob {
+    display: flex;
+  }
+}

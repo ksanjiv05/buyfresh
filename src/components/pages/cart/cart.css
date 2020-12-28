@@ -1,0 +1,16 @@
+@media screen and (max-width: 480px) {
+  .cart-root {
+    padding: 2px;
+    flex-grow: 1;
+  }
+  .cart-items {
+    background-color: white;
+    padding: 6px;
+  }
+  .cart-price-details-div {
+    margin-left: 0px;
+    padding: 2px 2px 2px 12px;
+    margin-top: 4px;
+    background-color: white;
+  }
+}

@@ -1,0 +1,21 @@
+export default (key, value) => {
+  if (value == undefined) {
+    console.log("undefind  ", value);
+    return true;
+  }
+  const emailregx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  switch (key) {
+    case "First":
+      return value && value.length < 3;
+      break;
+    case "Last":
+      return value && value.length < 3;
+      break;
+    case "Email":
+      return emailregx.test(value) ? false : true;
+      break;
+    case "Password":
+      return value && value.length < 8;
+      break;
+  }
+};
