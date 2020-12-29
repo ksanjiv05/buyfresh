@@ -29,7 +29,7 @@ const styles = (theme) => ({
 });
 const buttonTheam = {
   width: "100%",
-  marginLeft: "1.5%",
+  // marginLeft: "1.5%",
   marginTop: "3%",
   backgroundColor: "rgb(89, 6, 95)",
 };
@@ -64,7 +64,10 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 const toastObj = {
-  horizontal: "right",
+  anchorOrigin: {
+    vertical: "top",
+    horizontal: "center",
+  },
   autoHideDuration: 3000,
 };
 export default function Login(props) {
@@ -116,7 +119,7 @@ export default function Login(props) {
               <img src={image} alt="icon" className="reg-image" />
             </div>
             <div style={{ width: "50%", height: "100%", float: "right" }}>
-              <InputWithoutIcon
+              {/* <InputWithoutIcon
                 lable="Email"
                 placeholder="Enter your email"
                 isError={emailregx.test(data.Email) ? false : true}
@@ -146,8 +149,10 @@ export default function Login(props) {
                 // startIcon={<SaveIcon />}
               >
                 LOGIN
-              </Button>
+              </Button> */}
 
+              <center>{/* <Typography variant="h6">OR</Typography> */}</center>
+              <PhoneAuth />
               <Button
                 variant="contained"
                 color="secondary"
@@ -161,10 +166,6 @@ export default function Login(props) {
               >
                 New ? Create an account
               </Button>
-              <center>
-                <Typography variant="h6">OR</Typography>
-              </center>
-              <PhoneAuth />
             </div>
           </div>
         </DialogContent>

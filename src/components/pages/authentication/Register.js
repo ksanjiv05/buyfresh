@@ -14,12 +14,15 @@ import { useSnackbar } from "notistack";
 
 const buttonTheam = {
   width: "100%",
-  marginLeft: "1.5%",
+
   marginTop: "3%",
   backgroundColor: "rgb(89, 6, 95)",
 };
 const toastObj = {
-  horizontal: "right",
+  anchorOrigin: {
+    vertical: "top",
+    horizontal: "center",
+  },
   autoHideDuration: 3000,
 };
 const Register = () => {
@@ -91,18 +94,19 @@ const Register = () => {
     <div className="account-container">
       <div className="account-left"></div>
       <div className="account-right">
-        <div className="progress-div">
-          <Progress
-            percent={50 * progress}
-            // status="success"
-            theme={{
-              success: {
-                color: "rgb(89, 6, 95)",
-              },
-            }}
-          />
-        </div>
-        <Button
+        <div style={{ padding: 15, paddingTop: "16%" }}>
+          <div className="progress-div">
+            <Progress
+              percent={50 * progress}
+              // status="success"
+              theme={{
+                success: {
+                  color: "rgb(89, 6, 95)",
+                },
+              }}
+            />
+          </div>
+          {/* <Button
           variant="contained"
           color="secondary"
           style={buttonTheam}
@@ -123,76 +127,77 @@ const Register = () => {
           }
           startIcon={<Facebook />}>
           Login With FACEBOOK
-        </Button>
-        {progress === 1 ? (
-          <>
-            <InputWithoutIcon
-              lable="First"
-              placeholder="Enter the first name"
-              isError={data.First && data.First.length < 3}
-              errorMsg={
-                data.First && data.First.length < 3
-                  ? "Please Enter valid first name"
-                  : ""
-              }
-              setIsErrors={setIsErrors}
-              handleChange={handleChange}
-            />
-            <InputWithoutIcon
-              lable="Last"
-              placeholder="Enter the last name"
-              isError={data.Last && data.Last.length < 3}
-              errorMsg={
-                data.Last && data.Last.length < 3
-                  ? "Please Enter valid last name"
-                  : ""
-              }
-              setIsErrors={setIsErrors}
-              handleChange={handleChange}
-            />
-            <Button
-              variant="contained"
-              color="secondary"
-              style={buttonTheam}
-              // className={classes.button}
-              onClick={handleSave}
-              startIcon={<SaveIcon />}>
-              SAVE
-            </Button>
-          </>
-        ) : (
-          <>
-            <InputWithoutIcon
-              lable="Email"
-              placeholder="Enter the email"
-              isError={emailregx.test(data.Email) ? false : true}
-              errorMsg={
-                emailregx.test(data.Email) ? "" : "Please Enter valid Email"
-              }
-              handleChange={handleChange}
-            />
-            <InputWithoutIcon
-              lable="Passwrod"
-              placeholder="Enter the last Password"
-              isError={data.Password && data.Password.length < 8}
-              errorMsg={
-                data.Password && data.Password.length < 8
-                  ? "Please Enter valid password"
-                  : ""
-              }
-              handleChange={handleChange}
-            />
-            <Button
-              variant="contained"
-              color="secondary"
-              style={buttonTheam}
-              // className={classes.button}
-              onClick={handleEmailSave}
-              startIcon={<SaveIcon />}>
-              Create
-            </Button>
-          </>
-        )}
+        </Button> */}
+          {progress === 1 ? (
+            <>
+              <InputWithoutIcon
+                lable="First"
+                placeholder="Enter the first name"
+                isError={data.First && data.First.length < 3}
+                errorMsg={
+                  data.First && data.First.length < 3
+                    ? "Please Enter valid first name"
+                    : ""
+                }
+                setIsErrors={setIsErrors}
+                handleChange={handleChange}
+              />
+              <InputWithoutIcon
+                lable="Last"
+                placeholder="Enter the last name"
+                isError={data.Last && data.Last.length < 3}
+                errorMsg={
+                  data.Last && data.Last.length < 3
+                    ? "Please Enter valid last name"
+                    : ""
+                }
+                setIsErrors={setIsErrors}
+                handleChange={handleChange}
+              />
+              <Button
+                variant="contained"
+                color="secondary"
+                style={buttonTheam}
+                // className={classes.button}
+                onClick={handleSave}
+                startIcon={<SaveIcon />}>
+                SAVE & NEXT
+              </Button>
+            </>
+          ) : (
+            <>
+              <InputWithoutIcon
+                lable="Email"
+                placeholder="Enter the email"
+                isError={emailregx.test(data.Email) ? false : true}
+                errorMsg={
+                  emailregx.test(data.Email) ? "" : "Please Enter valid Email"
+                }
+                handleChange={handleChange}
+              />
+              <InputWithoutIcon
+                lable="Passwrod"
+                placeholder="Enter the last Password"
+                isError={data.Password && data.Password.length < 8}
+                errorMsg={
+                  data.Password && data.Password.length < 8
+                    ? "Please Enter valid password"
+                    : ""
+                }
+                handleChange={handleChange}
+              />
+              <Button
+                variant="contained"
+                color="secondary"
+                style={buttonTheam}
+                // className={classes.button}
+                onClick={handleEmailSave}
+                startIcon={<SaveIcon />}>
+                Create
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

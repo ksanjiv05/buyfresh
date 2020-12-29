@@ -15,7 +15,10 @@ const buttonTheam = {
   backgroundColor: "rgb(89, 6, 95)",
 };
 const toastObj = {
-  horizontal: "right",
+  anchorOrigin: {
+    vertical: "top",
+    horizontal: "center",
+  },
   autoHideDuration: 3000,
 };
 
@@ -51,8 +54,8 @@ export default function MobileLogin() {
     <div className="account-container">
       <div className="account-left"></div>
       <div className="account-right">
-        <div style={{ padding: "10px" }}>
-          <InputWithoutIcon
+        <div style={{ padding: "10px", paddingTop: "50%" }}>
+          {/* <InputWithoutIcon
             lable="Email"
             placeholder="Enter your email"
             isError={emailregx.test(data.Email) ? false : true}
@@ -82,8 +85,12 @@ export default function MobileLogin() {
             // startIcon={<SaveIcon />}
           >
             LOGIN
-          </Button>
+          </Button> */}
 
+          {/* <center>
+            <Typography variant="h6">OR</Typography>
+          </center> */}
+          <PhoneAuth />
           <Button
             variant="contained"
             color="secondary"
@@ -96,10 +103,6 @@ export default function MobileLogin() {
           >
             New ? Create an account
           </Button>
-          <center>
-            <Typography variant="h6">OR</Typography>
-          </center>
-          <PhoneAuth />
         </div>
       </div>
     </div>

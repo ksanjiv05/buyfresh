@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import OtpInput from "react-otp-input";
 import Alert from "@material-ui/lab/Alert";
+import NumberFormat from "react-number-format";
 import { useSnackbar } from "notistack";
 
 const buttonTheam = {
@@ -14,7 +15,10 @@ const buttonTheam = {
   backgroundColor: "rgb(89, 6, 95)",
 };
 const toastObj = {
-  horizontal: "right",
+  anchorOrigin: {
+    vertical: "top",
+    horizontal: "center",
+  },
   autoHideDuration: 3000,
 };
 const PhoneAuth = () => {
@@ -26,8 +30,16 @@ const PhoneAuth = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const handleChange = (value) => {
     console.log("------", value);
+    let length = data.length;
+    length < 10 || length > 10 ? setError(true) : setError(false);
+    // if (length > 10) {
+    //   setData(data);
+    //   console.log("phonw>10");
+    // } else {
+    //   setData(value);
+    //   console.log("phonw<10");
+    // }
     setData(value);
-    setError(false);
   };
   const handleChangeOtp = (value) => {
     setOtp(value);
@@ -38,6 +50,8 @@ const PhoneAuth = () => {
     console.log(data.length, "++++++++", data);
     if (data.length != 10) {
       setError(true);
+      toastObj.variant = "error";
+      enqueueSnackbar("Please enter valid mobile number", toastObj);
       return;
     }
 
@@ -80,10 +94,9 @@ const PhoneAuth = () => {
         <TextField
           error={error}
           label="phone"
-          style={{ margin: 8 }}
+          // style={{ margin: 8 }}
           placeholder="enter phone number"
           onChange={(ev) => handleChange(ev.target.value)}
-          // value={}
           fullWidth
           margin="normal"
           helperText={error ? "Please enter valid contact number" : ""}
@@ -122,3 +135,14 @@ const PhoneAuth = () => {
 };
 
 export default PhoneAuth;
+{
+}
+{
+  /* <NumberFormat
+          prefix={"+91"}
+          value={123456789}
+          placeholder="enter phone number"
+          onChange={(ev) => handleChange(ev.target.value)}
+          format=" #### ######"
+        /> */
+}

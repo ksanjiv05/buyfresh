@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import Context from "../../../Context";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import CartItemDetails from "../../widget/CartItemDetails";
 import CartPriceDeatils from "../../widget/CartPriceDeatils";
@@ -63,9 +64,17 @@ const Cart = () => {
                   </tr>
                   {mylist}
                 </table>
-                <div>
+                <div style={{ display: "inline-flex" }}>
                   <CustomButton clearCart={clearCart} value="Clear Cart" />
-                  {/* <button onClick={()=>}>Checkout</button> */}
+                  <Button
+                    variant="contained"
+                    color="default"
+                    style={{ marginLeft: "5px" }}
+                    onClick={() => history.push("/checkout")}
+                    // startIcon={<AddShoppingCartIcon />}
+                  >
+                    Checkout
+                  </Button>
                 </div>
               </div>
             ) : (
@@ -98,9 +107,20 @@ const Cart = () => {
               </tr>
               {mylist}
             </table>
-            <div>
+            <div style={{ display: "inline-flex" }}>
               <CustomButton clearCart={clearCart} value="Clear Cart" />
-              {/* <button onClick={()=>}>Checkout</button> */}
+              {/* <button >
+                Checkout
+              </button> */}
+              <Button
+                variant="contained"
+                color="default"
+                style={{ marginLeft: "5px" }}
+                onClick={() => history.push("/checkout")}
+                // startIcon={<AddShoppingCartIcon />}
+              >
+                Checkout
+              </Button>
             </div>
           </div>
         ) : (

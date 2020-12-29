@@ -1,6 +1,7 @@
 .address_heading {
   margin-left: 13px;
   color: #5d5d5d;
+  line-height: 0;
 }
 .addr_card {
   display: flex;

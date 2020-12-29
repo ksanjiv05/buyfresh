@@ -66,10 +66,10 @@ th {
 }
 .checkout-containt {
   width: 96%;
-  height: 411px;
+  min-height: calc(100vh-70px);
   background-color: white;
   margin-top: 19px;
-  padding: 0% 2% 0% 2%;
+  padding: 3% 2% 1% 2%;
 }
 .time-slot {
   height: 30px;
@@ -131,36 +131,31 @@ th {
   display: contents;
 }
 
-.arr-img {
-  width: 60px;
-  height: 50px;
-}
-
-.order-img {
-  width: 100%;
-  height: 79px;
-  overflow: auto;
-  /* justify-content: center; */
-  /* margin-left: 18%; */
-  border: 1px solid;
-}
-.order-img::-webkit-scrollbar {
-  display: none;
-}
-.order-img > ul {
-  display: flex;
-  list-style: none;
-  white-space: pre-wrap;
-}
-.MuiTimelineDot-root {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
 .progress-div {
   width: 100%;
   height: 50px;
   padding: 5px;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  max-width: 400px;
+  min-width: 150px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-12%, -50%);
+  font-size: 20px;
+}
+div.loader {
+  font-size: 100px;
+}
+
+.loaded {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 @media screen and (max-width: 480px) {
   .account-container {

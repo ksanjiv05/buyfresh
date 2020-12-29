@@ -30,8 +30,17 @@ const Payment = () => {
   return (
     <div className="checkout-container">
       <h1 style={{ color: "#717477" }}>Choose Delivery Options </h1>
-      <p>COD available</p>
-      <button onClick={(e) => Pay(e)}>pay</button>
+      <div className="time-slot">
+        <input
+          type="radio"
+          name="timeslot"
+          className="time-slot-input"
+          value="cod"
+          defaultChecked
+        />
+        <label>COD available</label>
+      </div>
+      {/* <button onClick={(e) => Pay(e)}>pay</button> */}
     </div>
   );
 };

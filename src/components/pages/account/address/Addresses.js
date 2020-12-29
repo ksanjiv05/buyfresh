@@ -49,7 +49,7 @@ const Addresses = () => {
     console.log(v, "---------");
   };
   return (
-    <div className="account-container">
+    <div className="account-container" style={{ height: "auto" }}>
       <h1 className={styles.address_heading}>Address</h1>
       <div className={styles.addIconMob}>
         <div style={{ width: "100%", margin: "5px 10px" }}>

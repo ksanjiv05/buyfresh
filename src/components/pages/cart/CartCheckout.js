@@ -6,6 +6,7 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Address from "../account/address/Address";
+import Addresses from "../account/address/Addresses";
 import TimeSlot from "../../widget/TimeSlot";
 import Payment from "../../widget/Payment";
 
@@ -32,7 +33,8 @@ function getStepContent(stepIndex) {
     case 0:
       return (
         <div>
-          <Address />
+          {/* <Address /> */}
+          <Addresses />
         </div>
       );
     case 1:

@@ -5,6 +5,8 @@ import Index from "./components/Index";
 import axios from "axios";
 import Auth from "./auth/Auth";
 import Context from "./Context";
+import Spinner from "./components/molecules/Spinner";
+import AddProduct from "./components/admin/saller/AddProduct";
 
 class App extends Component {
   constructor(props) {
@@ -15,11 +17,14 @@ class App extends Component {
       totalCart: [],
       products: [],
       searchValue: "",
+      loding: true,
+      isAdmin: false,
     };
     this.auth = new Auth(this.props.history);
   }
 
   async componentDidMount() {
+    this.setState({ loding: true });
     if (localStorage.getItem("cartItemxx")) {
       const documentData = JSON.parse(localStorage.getItem("cartItemxx"));
       this.setState({
@@ -28,11 +33,12 @@ class App extends Component {
         products: documentData.products,
       });
     }
-
+    console.log("quntity", this.state.totalQuntity);
     const products = await axios.get(
       "https://buyfreshapi.herokuapp.com/api/products"
     );
     this.setState({ products: products.data.products });
+    this.setState({ loding: false });
   }
 
   addToCart = (cart) => {
@@ -92,6 +98,13 @@ class App extends Component {
           //isSingIn: this.auth.isSinghedIn,
         }}>
         <SnackbarProvider maxSnack={3}>
+          {/* {this.state.loding ? (
+            <Spinner />
+          ) : this.state.isAdmin ? (
+            <AddProduct />
+          ) : (
+            <Index />
+          )} */}
           <Index />
         </SnackbarProvider>
       </Context.Provider>
