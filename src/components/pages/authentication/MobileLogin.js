@@ -1,12 +1,10 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import InputWithoutIcon from "../../molecules/InputWithoutIcon";
-import image from "../account/cool-background (1).png";
 import PhoneAuth from "../../molecules/PhoneAuth";
 import Context from "../../../Context";
-import { useSnackbar } from "notistack";
+import WithToast from "../../../helper/WithToast";
 
 const buttonTheam = {
   width: "100%",
@@ -14,19 +12,13 @@ const buttonTheam = {
   marginTop: "3%",
   backgroundColor: "rgb(89, 6, 95)",
 };
-const toastObj = {
-  anchorOrigin: {
-    vertical: "top",
-    horizontal: "center",
-  },
-  autoHideDuration: 3000,
-};
 
-export default function MobileLogin() {
+function MobileLogin(props) {
+  console.log("--", props);
   const [data, setData] = useState({});
   const { auth } = useContext(Context);
   const history = useHistory();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   // signInWithEmailPassword
   const handleChange = (ev) => {
     const { name, value } = ev.target;
@@ -43,8 +35,7 @@ export default function MobileLogin() {
     auth.signInWithEmailPassword(data.Email, data.Password, (status) => {
       console.log("singed email", status);
       let msg = status ? "You are successfully loged in" : "Loged in failed";
-      status ? (toastObj.variant = "success") : (toastObj.variant = "error");
-      enqueueSnackbar(msg, toastObj);
+      status ? props.success(msg) : props.error(msg);
     });
   };
 
@@ -90,7 +81,11 @@ export default function MobileLogin() {
           {/* <center>
             <Typography variant="h6">OR</Typography>
           </center> */}
-          <PhoneAuth />
+          <PhoneAuth
+            btnMsg="LOGIN WITH OTP"
+            success={props.success}
+            error={props.error}
+          />
           <Button
             variant="contained"
             color="secondary"
@@ -108,3 +103,5 @@ export default function MobileLogin() {
     </div>
   );
 }
+
+export default WithToast(MobileLogin);

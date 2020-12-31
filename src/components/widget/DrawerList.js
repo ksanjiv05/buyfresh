@@ -27,8 +27,8 @@ const DrawerList = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
-  const { auth } = useContext(Context);
-  // console.log(auth, "curren t user --", auth.auth0.currentUser.photoURL);
+  const { auth, isAuthenticate, singOut } = useContext(Context);
+
   function handleListKeyDown(event) {
     if (event.key === "Tab") {
       event.preventDefault();
@@ -45,7 +45,7 @@ const DrawerList = (props) => {
       <div
         className="profile-icon"
         onClick={() =>
-          auth.isSinghedIn() ? history.push("/profile") : history.push("/login")
+          isAuthenticate ? history.push("/profile") : history.push("/login")
         }>
         <img
           src={
@@ -96,14 +96,12 @@ const DrawerList = (props) => {
           <ListItemText primary="Help" />
         </ListItem>
         <div
-          onClick={() =>
-            auth.isSinghedIn() ? auth.singOut() : history.push("/login")
-          }>
+          onClick={() => (isAuthenticate ? singOut() : history.push("/login"))}>
           <ListItem button>
             <ListItemIcon>
-              {auth.isSinghedIn() ? <ExitToAppIcon /> : <InputIcon />}
+              {isAuthenticate ? <ExitToAppIcon /> : <InputIcon />}
             </ListItemIcon>
-            <ListItemText primary={auth.isSinghedIn() ? "Logout" : "Login"} />
+            <ListItemText primary={isAuthenticate ? "Logout" : "Login"} />
           </ListItem>
         </div>
       </List>

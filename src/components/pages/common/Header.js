@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Context from "../../../Context";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,8 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 
 import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import HomeIcon from "@material-ui/icons/Home";
@@ -47,15 +45,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header(props) {
-  const { totalQuntity } = useContext(Context);
+  const { totalQuntity, auth, isAuthenticate, singOut } = useContext(Context);
   let history = useHistory();
-
+  const [isAuth, setIsAuth] = useState(null);
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handelCart = () => {
     history.push("/cart");
@@ -69,36 +62,6 @@ export default function Header(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-  const handleProfile = () => {
-    history.push("/profile");
-    handleMenuClose();
-  };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}>
-      <MenuItem onClick={handleProfile}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
 
   return (
     <div className={classes.grow}>
@@ -148,8 +111,10 @@ export default function Header(props) {
               </Badge>
             </IconButton> */}
 
-            <div style={{ cursor: "pointer" }} onClick={handleClickOpen}>
-              LOGIN
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => (isAuthenticate ? singOut() : handleClickOpen)}>
+              {isAuthenticate ? "LOGOUT" : "LOGIN"}
             </div>
             <Login
               handleClickOpen={handleClickOpen}
@@ -169,8 +134,6 @@ export default function Header(props) {
           </div>
         </Toolbar>
       </AppBar>
-
-      {renderMenu}
     </div>
   );
 }

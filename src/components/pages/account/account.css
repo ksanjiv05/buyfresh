@@ -23,6 +23,17 @@
   margin-top: 3%;
   background-color: rgb(89, 6, 95);
 }
+.add-addresses {
+  width: 50%;
+  background-color: aliceblue;
+  float: right;
+  padding: 10px;
+}
+.address-group {
+  width: 48%;
+  float: left;
+  box-sizing: border-box;
+}
 @media screen and (max-width: 480px) {
   .account-left {
     display: none;

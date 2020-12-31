@@ -152,7 +152,7 @@ export default function Login(props) {
               </Button> */}
 
               <center>{/* <Typography variant="h6">OR</Typography> */}</center>
-              <PhoneAuth />
+              <PhoneAuth btnMsg={"LOGIN WITH OTP"} />
               <Button
                 variant="contained"
                 color="secondary"

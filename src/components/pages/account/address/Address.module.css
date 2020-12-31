@@ -49,6 +49,7 @@
 .addIconMob {
   display: none;
 }
+
 @media screen and (max-width: 480px) {
   .addIcon {
     display: none;

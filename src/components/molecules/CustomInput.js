@@ -3,12 +3,20 @@ import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import CreateIcon from "@material-ui/icons/Create";
-const CustomInput = ({ lable, placeholder, value, handleChange }) => {
+const CustomInput = ({
+  lable,
+  placeholder,
+  value,
+  name,
+  handleChange,
+  nonEditable,
+}) => {
   const [isEdit, setIsEdit] = React.useState(true);
   return (
     <div>
       <TextField
         label={lable}
+        name={name}
         value={value}
         // style={{ margin: 8 }}
         placeholder={placeholder}
@@ -20,7 +28,9 @@ const CustomInput = ({ lable, placeholder, value, handleChange }) => {
           shrink: true,
         }}
         InputProps={{
-          endAdornment: (
+          endAdornment: nonEditable ? (
+            <></>
+          ) : (
             <InputAdornment position="end">
               <IconButton onClick={() => setIsEdit(false)}>
                 <CreateIcon />

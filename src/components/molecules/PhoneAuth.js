@@ -1,44 +1,30 @@
 import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Context from "../../Context";
 import firebase from "firebase/app";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import OtpInput from "react-otp-input";
-import Alert from "@material-ui/lab/Alert";
-import NumberFormat from "react-number-format";
-import { useSnackbar } from "notistack";
 
 const buttonTheam = {
   width: "100%",
-
   marginTop: "3%",
   backgroundColor: "rgb(89, 6, 95)",
 };
-const toastObj = {
-  anchorOrigin: {
-    vertical: "top",
-    horizontal: "center",
-  },
-  autoHideDuration: 3000,
-};
-const PhoneAuth = () => {
+
+const PhoneAuth = (props) => {
+  console.log(props);
+  const { btnMsg } = props;
   const [data, setData] = useState("");
   const [error, setError] = useState(false);
   const [otp, setOtp] = useState("");
   const [state, setState] = useState(false);
   const { auth } = useContext(Context);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const history = useHistory();
+
   const handleChange = (value) => {
-    console.log("------", value);
     let length = data.length;
-    length < 10 || length > 10 ? setError(true) : setError(false);
-    // if (length > 10) {
-    //   setData(data);
-    //   console.log("phonw>10");
-    // } else {
-    //   setData(value);
-    //   console.log("phonw<10");
-    // }
+    length < 9 ? setError(true) : setError(false);
     setData(value);
   };
   const handleChangeOtp = (value) => {
@@ -47,11 +33,9 @@ const PhoneAuth = () => {
   };
 
   const handleSendOTP = () => {
-    console.log(data.length, "++++++++", data);
     if (data.length != 10) {
       setError(true);
-      toastObj.variant = "error";
-      enqueueSnackbar("Please enter valid mobile number", toastObj);
+      props.error("Please enter valid mobile number");
       return;
     }
 
@@ -67,8 +51,8 @@ const PhoneAuth = () => {
       auth.signInWithPhone("+91" + data, appVerifier, (status) => {
         console.log("what is v ", status);
         let msg = status ? "OTP successfully send" : "OTP sending failed";
-        status ? (toastObj.variant = "success") : (toastObj.variant = "error");
-        enqueueSnackbar(msg, toastObj);
+        status ? props.success(msg) : props.error(msg);
+
         setState(status);
       });
     } catch (err) {
@@ -81,9 +65,12 @@ const PhoneAuth = () => {
       let msg = status
         ? "Mobile Number successfully varified"
         : "OTP varification failed";
-      status ? (toastObj.variant = "success") : (toastObj.variant = "error");
-      enqueueSnackbar(msg, toastObj);
-      setState(status);
+      status ? props.success(msg) : props.error(msg);
+      if (status) {
+        history.goBack();
+        history.go(0);
+      }
+
       setState(status);
     });
   };
@@ -92,9 +79,9 @@ const PhoneAuth = () => {
     <div>
       {!state ? (
         <TextField
+          tabIndex={2}
           error={error}
           label="phone"
-          // style={{ margin: 8 }}
           placeholder="enter phone number"
           onChange={(ev) => handleChange(ev.target.value)}
           fullWidth
@@ -103,6 +90,12 @@ const PhoneAuth = () => {
           InputLabelProps={{
             shrink: true,
           }}
+          inputProps={{ maxLength: 10 }}
+          // onInput={(e) => {
+          //   e.target.value = Math.max(0, parseInt(e.target.value))
+          //     .toString()
+          //     .slice(0, 10);
+          // }}
         />
       ) : (
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -127,7 +120,7 @@ const PhoneAuth = () => {
         color="secondary"
         style={buttonTheam}
         onClick={!state ? handleSendOTP : varifyCode}>
-        {!state ? "LOGIN WITH OTP" : "VARIFY OTP"}
+        {!state ? btnMsg : "VARIFY OTP"}
       </Button>
       <div id="recaptcha-container"></div>
     </div>
@@ -135,14 +128,11 @@ const PhoneAuth = () => {
 };
 
 export default PhoneAuth;
-{
-}
-{
-  /* <NumberFormat
+
+/* <NumberFormat
           prefix={"+91"}
           value={123456789}
           placeholder="enter phone number"
           onChange={(ev) => handleChange(ev.target.value)}
           format=" #### ######"
         /> */
-}

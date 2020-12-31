@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import jwtDecode from "jwt-decode";
 
 export default class Auth {
   constructor(history) {
@@ -70,17 +71,26 @@ export default class Auth {
       .confirm(otp)
       .then(function (result) {
         console.log(" User signed in successfully.", result.user);
-        var user = result.user;
-        user.getIdToken().then((idToken) => {
-          console.log(idToken);
+        const user = result.user;
+
+        user.getIdToken().then((token) => {
+          sessionStorage.setItem("accessToken", token);
         });
+        sessionStorage.setItem("phoneNumber", user.phoneNumber);
+        sessionStorage.setItem("uid", user.uid);
         callback(true);
-        this.history.push("/");
       })
       .catch((err) => {
         console.log("-----------", err);
+        sessionStorage.setItem("userString", null);
         callback(false);
       });
+    // const credential = firebase.auth.PhoneAuthProvider.credential(
+    //   window.confirmationResult.verificationId,
+    //   otp
+    // );
+    // console.log("users cread", credential.toJSON());
+    // callback(true);
   };
   signInWithFacebook = (provider) => {
     console.log("---------------------");
@@ -163,13 +173,43 @@ export default class Auth {
 
   singOut = () => {
     if (!this.auth0) return;
-    console.log("-------------++++++++--------");
+    console.log("-------------++++++++- user singout-------");
     this.auth0.signOut();
   };
 
   isSinghedIn = () => {
     if (!this.auth0) return 0;
-    console.log("this is curenrt user ", this.auth0.currentUser);
+    this.auth0.currentUser &&
+      this.auth0.currentUser.getIdToken().then((t) => {
+        console.log("token ", t);
+      });
     return this.auth0.currentUser;
+  };
+
+  refreshToken = () => {
+    this.auth0.onIdTokenChanged((user) => {
+      if (user) {
+        console.log("user ref ", user);
+
+        user.getIdToken().then((token) => {
+          sessionStorage.setItem("accessToken", token);
+        });
+        sessionStorage.setItem("phoneNumber", user.phoneNumber);
+        sessionStorage.setItem("uid", user.uid);
+        console.log("user data", sessionStorage.getItem("phoneNumber"));
+      }
+    });
+  };
+
+  decodeToken = async (token) => {
+    console.log("decode token ", token);
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp * 1000 < Date.now()) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   };
 }

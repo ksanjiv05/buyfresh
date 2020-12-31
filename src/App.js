@@ -19,6 +19,7 @@ class App extends Component {
       searchValue: "",
       loding: true,
       isAdmin: false,
+      isAuthenticate: false,
     };
     this.auth = new Auth(this.props.history);
   }
@@ -32,12 +33,33 @@ class App extends Component {
         totalCart: documentData.totalCart,
         products: documentData.products,
       });
+    } else {
+      const products = await axios.get(
+        "https://buyfreshapi.herokuapp.com/api/products"
+      );
+      this.setState({ products: products.data.products });
     }
-    console.log("quntity", this.state.totalQuntity);
-    const products = await axios.get(
-      "https://buyfreshapi.herokuapp.com/api/products"
-    );
-    this.setState({ products: products.data.products });
+    console.log("access token", sessionStorage.getItem("accessToken"));
+    let token = sessionStorage.getItem("accessToken");
+    if (!token) {
+      this.auth.refreshToken();
+    }
+    token = sessionStorage.getItem("accessToken");
+    let isValidToken = this.auth.decodeToken(token);
+    if (isValidToken) {
+      console.log("token is valid");
+      this.setState({ isAuthenticate: true });
+    } else {
+      console.log("token is not valid");
+      this.setState({ isAuthenticate: false });
+      this.auth.refreshToken();
+      token = sessionStorage.getItem("accessToken");
+      if (await this.auth.decodeToken(token))
+        this.setState({ isAuthenticate: true });
+
+      // (window.location.href = "/login")
+    }
+
     this.setState({ loding: false });
   }
 
@@ -78,12 +100,24 @@ class App extends Component {
     this.setState({ searchValue: value });
   };
 
-  removeFromCart = (cartItemId) => {};
-
   clearCart = () => {
     localStorage.setItem("cartItemxx", "");
     this.setState({ totalQuntity: 0, totalCart: [] });
   };
+
+  singOut = () => {
+    try {
+      this.auth.singOut();
+      sessionStorage.removeItem("phoneNumber");
+      sessionStorage.removeItem("uid");
+      sessionStorage.removeItem("accessToken");
+      this.setState({ isAuthenticate: false });
+      console.log("User singout successfully");
+    } catch (err) {
+      console.log("user singout  error");
+    }
+  };
+  removeFromCart = (cartItemId) => {};
 
   checkout = () => {};
   render() {
@@ -93,6 +127,7 @@ class App extends Component {
           ...this.state,
           addToCart: this.addToCart,
           handleSearch: this.handleSearch,
+          singOut: this.singOut,
           auth: this.auth,
           clearCart: this.clearCart,
           //isSingIn: this.auth.isSinghedIn,
@@ -105,7 +140,7 @@ class App extends Component {
           ) : (
             <Index />
           )} */}
-          <Index />
+          {this.state.loding ? <Spinner /> : <Index />}
         </SnackbarProvider>
       </Context.Provider>
     );
