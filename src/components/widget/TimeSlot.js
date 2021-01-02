@@ -5,7 +5,7 @@ const timeSlot = [
   { slot2: "12:00AM-3:00PM" },
   { slot3: "5:00PM-7:00PM" },
 ];
-const TimeSlot = () => {
+const TimeSlot = (props) => {
   return (
     <div className="checkout-container">
       <h1 style={{ color: "#717477" }}>Choose Time Slot </h1>
@@ -18,6 +18,9 @@ const TimeSlot = () => {
               type="radio"
               name="timeslot"
               className="time-slot-input"
+              onChange={(e) =>
+                props.handleChange(e.target.name, e.target.value)
+              }
               value={v[slot]}
               key={i}
             />

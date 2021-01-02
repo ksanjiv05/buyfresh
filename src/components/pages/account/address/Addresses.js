@@ -44,9 +44,10 @@ const address = [
     zip: "816102",
   },
 ];
-const Addresses = () => {
+const Addresses = (props) => {
   const handleSelect = (v) => {
     console.log(v, "---------");
+    props.handleChange("address", v);
   };
   return (
     <div className="account-container" style={{ height: "auto" }}>

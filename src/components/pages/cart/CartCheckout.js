@@ -9,7 +9,15 @@ import Address from "../account/address/Address";
 import Addresses from "../account/address/Addresses";
 import TimeSlot from "../../widget/TimeSlot";
 import Payment from "../../widget/Payment";
+import PlaceOrder from "./PlaceOrder";
 
+const buttonTheam = {
+  width: "100%",
+  // marginLeft: "1.5%",
+  color: "white",
+  marginTop: "3%",
+  backgroundColor: "rgb(89, 6, 95)",
+};
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "96%",
@@ -28,25 +36,24 @@ function getSteps() {
   return ["Select Delevery Address", "Choose Time Slot", "Payment"];
 }
 
-function getStepContent(stepIndex) {
+function getStepContent(stepIndex, handleChange) {
   switch (stepIndex) {
     case 0:
       return (
         <div>
-          {/* <Address /> */}
-          <Addresses />
+          <Addresses handleChange={handleChange} />
         </div>
       );
     case 1:
       return (
         <div>
-          <TimeSlot />
+          <TimeSlot handleChange={handleChange} />
         </div>
       );
     case 2:
       return (
         <div>
-          <Payment />
+          <Payment handleChange={handleChange} />
         </div>
       );
     default:
@@ -57,10 +64,30 @@ function getStepContent(stepIndex) {
 export default function CartCheckout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [data, setData] = React.useState({});
   const steps = getSteps();
 
+  const handleChange = (name, value) => {
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const handleNext = (value) => {
-    console.log(value);
+    console.log(activeStep, "the data value ", data);
+    if (activeStep == 0 && data && data.address == null) {
+      alert("please choose address");
+      return;
+    }
+    if (activeStep == 1 && data && data.timeslot == null) {
+      alert("please choose time slot");
+      return;
+    }
+    if (activeStep == 2 && data && data.paymentMod == null) {
+      alert("please choose payment");
+      return;
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -69,11 +96,8 @@ export default function CartCheckout() {
   };
 
   const handleReset = () => {
-    setActiveStep(0);
-  };
-
-  const handleFinish = () => {
-    alert("finished");
+    alert("order placed");
+    // setActiveStep(0);
   };
 
   return (
@@ -87,18 +111,20 @@ export default function CartCheckout() {
       </Stepper>
       <div className="checkout-containt">
         {activeStep === steps.length ? (
-          <div>
+          <div className="cart-final">
             <Typography className={classes.instructions}>
-              All steps completed
+              <PlaceOrder data={data} />
             </Typography>
-            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={handleReset} style={buttonTheam}>
+              Place Order
+            </Button>
           </div>
         ) : (
           <div>
             <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
+              {getStepContent(activeStep, handleChange)}
             </Typography>
-            <div>
+            <div className="checkout-button">
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
@@ -107,7 +133,7 @@ export default function CartCheckout() {
               </Button>
               <Button
                 variant="contained"
-                color="primary"
+                style={{ backgroundColor: "rgb(89, 6, 95)", color: "white" }}
                 onClick={(ev) => handleNext(ev.target)}>
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import InputWithoutIcon from "../../molecules/InputWithoutIcon";
@@ -16,7 +16,7 @@ const buttonTheam = {
 function MobileLogin(props) {
   console.log("--", props);
   const [data, setData] = useState({});
-  const { auth } = useContext(Context);
+  const { auth, isAuthenticate } = useContext(Context);
   const history = useHistory();
 
   // signInWithEmailPassword
@@ -39,6 +39,9 @@ function MobileLogin(props) {
     });
   };
 
+  useEffect(() => {
+    if (isAuthenticate) history.push("/profile");
+  }, [isAuthenticate]);
   const emailregx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   return (

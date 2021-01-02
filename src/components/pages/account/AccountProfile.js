@@ -83,7 +83,7 @@ const AccountProfile = (props) => {
       }
     }
     setLoder(false);
-  }, []);
+  }, [isAuthenticate]);
   return loder ? (
     <Spinner />
   ) : (

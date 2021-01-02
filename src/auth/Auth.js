@@ -201,15 +201,17 @@ export default class Auth {
     });
   };
 
-  decodeToken = async (token) => {
-    console.log("decode token ", token);
+  decodeToken = (token) => {
     if (token) {
+      console.log("decode tokevn ", token);
       const decodedToken = jwtDecode(token);
       if (decodedToken.exp * 1000 < Date.now()) {
         return false;
       } else {
         return true;
       }
+    } else {
+      return false;
     }
   };
 }

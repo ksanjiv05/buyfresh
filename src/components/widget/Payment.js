@@ -6,7 +6,7 @@ const options = {
   key_secret: "qGyIIe9u2Aclo9uevNrFXU8c",
 };
 
-const Payment = () => {
+const Payment = (props) => {
   const Pay = async (e) => {
     e.preventDefault();
 
@@ -33,10 +33,11 @@ const Payment = () => {
       <div className="time-slot">
         <input
           type="radio"
-          name="timeslot"
+          name="paymentMod"
           className="time-slot-input"
+          onChange={(e) => props.handleChange(e.target.name, e.target.value)}
           value="cod"
-          defaultChecked
+          // defaultChecked
         />
         <label>COD available</label>
       </div>
