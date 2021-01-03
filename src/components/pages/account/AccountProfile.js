@@ -6,11 +6,10 @@ import SaveIcon from "@material-ui/icons/Save";
 import EditIcon from "@material-ui/icons/Edit";
 import "./account.css";
 import FileDialog from "../../widget/FileDialog";
-import firebase from "../../../config/firebase";
-import DatabaseCollections from "../../../helper/Constants";
 import Context from "../../../Context";
 import Spinner from "../../../components/molecules/Spinner";
 import WithToast from "../../../helper/WithToast";
+import UserUtil from "../../../helper/StoreUsers";
 
 const buttonTheam = {
   width: "100%",
@@ -24,6 +23,7 @@ const AccountProfile = (props) => {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
   const [isUpdate, setIsUpdate] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
   const { auth, isAuthenticate } = useContext(Context);
 
   const handleClickOpen = () => {
@@ -46,18 +46,13 @@ const AccountProfile = (props) => {
   const handleSave = async () => {
     console.log("save data ", data);
     setLoder(true);
-    const db = firebase.firestore();
-    await db
-      .collection(DatabaseCollections.Users)
-      .doc(sessionStorage.getItem("uid"))
-      .set(data)
-      .then((result) => {
-        props.success("You are updated successfully ");
-      })
-      .catch((err) => {
-        console.log("userr err", err);
-        props.error("Unable to update you ");
-      });
+
+    data.uid = sessionStorage.getItem("uid");
+    UserUtil.StoreUsers(data, (status) => {
+      status
+        ? props.success("You are updated successfully ")
+        : props.error("Unable to update you ");
+    });
     setIsUpdate(false);
     setLoder(false);
   };
@@ -65,25 +60,18 @@ const AccountProfile = (props) => {
   useEffect(async () => {
     if (!isAuthenticate) history.push("/login");
     setLoder(true);
-    const db = firebase.firestore();
     console.log(sessionStorage.getItem("uid"), "user data", data);
     if (!sessionStorage.getItem("uid")) {
       console.log("uid empty");
       return;
     } else {
-      const userRef = db
-        .collection(DatabaseCollections.Users)
-        .doc(sessionStorage.getItem("uid"));
-      const doc = await userRef.get();
-      if (!doc.exists) {
-        console.log("No such document!");
-      } else {
-        setData(doc.data());
-        console.log("Document data:", doc.data());
-      }
+      const userData = await UserUtil.GetUser(sessionStorage.getItem("uid"));
+      setData(userData);
+      setImageUrl(data && data.photoURL);
     }
     setLoder(false);
   }, [isAuthenticate]);
+
   return loder ? (
     <Spinner />
   ) : (
@@ -92,7 +80,10 @@ const AccountProfile = (props) => {
         {/* <h1>Profile</h1> */}
         <div style={{ display: "contents" }}>
           <img
-            src={data && data.profile}
+            src={
+              imageUrl && imageUrl.length > 5 ? imageUrl : data && data.photoURL
+            }
+            // src="https://firebasestorage.googleapis.com/v0/b/buyfreshbro.appspot.com/o/Screenshot%20(16).png?alt=media&token=dcb8791e-df07-4f8e-ac82-72d0df96fd47"
             width="50%"
             height="50%"
             style={{ borderRadius: "100%" }}
@@ -112,6 +103,9 @@ const AccountProfile = (props) => {
             open={open}
             handleClickOpen={handleClickOpen}
             handleClose={handleClose}
+            success={props.success}
+            error={props.error}
+            setImageUrl={setImageUrl}
           />
         </div>
       </div>

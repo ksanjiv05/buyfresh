@@ -8,7 +8,7 @@ import AddAddress from "./pages/account/address/AddAddress";
 import Account from "./pages/account/Account";
 import AccountProfile from "./pages/account/AccountProfile";
 // import Address from "./widget/Address";
-import Addresses from "./pages/account/address/Addresses";
+import Addresses from "./pages/account/address/Address";
 import Register from "./pages/authentication/Register";
 import NewRegister from "./pages/authentication/NewRegister";
 import MyOrder from "./pages/orders/MyOrder";

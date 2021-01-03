@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import jwtDecode from "jwt-decode";
+import userUtil from "../helper/StoreUsers";
 
 export default class Auth {
   constructor(history) {
@@ -66,19 +67,28 @@ export default class Auth {
         callback(false);
       });
   };
-  varifyOTP = (otp, callback) => {
+  varifyOTP = async (otp, callback) => {
     window.confirmationResult
       .confirm(otp)
-      .then(function (result) {
+      .then(async function (result) {
         console.log(" User signed in successfully.", result.user);
         const user = result.user;
-
+        let data = {};
         user.getIdToken().then((token) => {
           sessionStorage.setItem("accessToken", token);
         });
         sessionStorage.setItem("phoneNumber", user.phoneNumber);
         sessionStorage.setItem("uid", user.uid);
-        callback(true);
+
+        data.phoneNumber = user.phoneNumber;
+        data.photoURL = user.photoURL;
+        data.uid = user.uid;
+
+        await userUtil
+          .storeUsers(data, (v) => console.log(v))
+          .then((r) => {
+            callback(true);
+          });
       })
       .catch((err) => {
         console.log("-----------", err);
@@ -178,11 +188,12 @@ export default class Auth {
   };
 
   isSinghedIn = () => {
-    if (!this.auth0) return 0;
+    if (!this.auth0) return;
     this.auth0.currentUser &&
       this.auth0.currentUser.getIdToken().then((t) => {
         console.log("token ", t);
       });
+
     return this.auth0.currentUser;
   };
 

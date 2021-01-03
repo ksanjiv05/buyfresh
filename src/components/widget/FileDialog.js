@@ -6,8 +6,42 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import firebase from "../../config/firebase";
+import DatabaseCollections from "../../helper/Constants";
+import UserUtil from "../../helper/StoreUsers";
 
 const FileDialog = (props) => {
+  const [image, setImage] = React.useState(null);
+
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    setImage((imageFile) => file);
+  };
+  const updateProfile = () => {
+    const storageRef = firebase.storage().ref();
+    const fileRef = storageRef.child(image.name);
+    fileRef
+      .put(image)
+      .then((v) => {
+        console.log("Uploaded a file", v.metadata, "---", v.totalBytes);
+        v.ref.getDownloadURL().then(async (dw) => {
+          const data = { photoURL: dw, uid: sessionStorage.getItem("uid") };
+          UserUtil.UpdateUser(data, (status) => {
+            if (status) {
+              props.setImageUrl(dw);
+              props.success("You are updated successfully ");
+            } else {
+              props.error("Unable to update you ");
+            }
+          });
+        });
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+    props.handleClose();
+  };
+
   return (
     <div>
       <Dialog
@@ -24,6 +58,7 @@ const FileDialog = (props) => {
             autoFocus
             margin="dense"
             id="name"
+            onChange={(e) => handleChange(e)}
             label="Pic Address"
             type="file"
             fullWidth
@@ -33,7 +68,7 @@ const FileDialog = (props) => {
           <Button onClick={props.handleClose} color="primary">
             Close
           </Button>
-          <Button onClick={props.handleClose} color="primary">
+          <Button onClick={updateProfile} color="primary">
             Update
           </Button>
         </DialogActions>

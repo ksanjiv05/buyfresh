@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputWithoutIcon from "../../../molecules/InputWithoutIcon";
+import WithToast from "../../../../helper/WithToast";
+import addressHelper from "../../../../helper/AddressHelper";
 import "../account.css";
 
 const buttonTheam = {
@@ -26,7 +28,7 @@ const Villages = [
   "Daldali",
   "Laragutu",
 ];
-const AddAddress = () => {
+const AddAddress = (props) => {
   const classes = useStyles();
   const [address, setAddress] = useState({});
   const handleChange = (ev) => {
@@ -39,7 +41,23 @@ const AddAddress = () => {
 
   const handleAddAddress = () => {
     console.log("address", address);
+
+    const data = { uid: sessionStorage.getItem("uid"), addresses: address };
+    addressHelper.UpdateAddress(data, (status) => {
+      status
+        ? props.success("Address added successfully")
+        : props.error("Address unable to add");
+    });
   };
+  useEffect(async () => {
+    const addresses = await addressHelper.GetAddresses(
+      sessionStorage.getItem("uid")
+    );
+
+    if (addresses) {
+      console.log("address ", addresses);
+    }
+  }, []);
 
   return (
     // <div className="add-addresses">
@@ -114,7 +132,7 @@ const AddAddress = () => {
           </div>
           <InputWithoutIcon
             lable="Phone"
-            name="pin"
+            name="phone"
             isError={address.Phone && address.Phone.length < 10}
             errorMsg={
               address.Phone && address.Phone.length < 10
@@ -136,4 +154,4 @@ const AddAddress = () => {
     </div>
   );
 };
-export default AddAddress;
+export default WithToast(AddAddress);

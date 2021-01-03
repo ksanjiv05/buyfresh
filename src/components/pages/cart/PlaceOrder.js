@@ -18,29 +18,32 @@ export default function PlaceOrder(props) {
   return (
     <div className="place-order-summary">
       <div className="place-order-address">
-        <h2>Name : {address.name}</h2>
-        <address>
-          {address.house +
-            "-" +
-            address.socity +
-            " " +
-            address.post +
-            " " +
-            address.dist +
-            " " +
-            address.state}
-        </address>
-        <p>Pincode :{address.zip}</p>
-        <p>Phone Number :{address.phone}</p>
-        <p>Alternet Phone Number :{address.aphone}</p>
+        <div className="order-border-style">Shipping Address :</div>
+        <div style={{ lineHeight: "10px" }}>
+          <h2>Name : {address.name}</h2>
+          <address>
+            {address.house +
+              "-" +
+              address.socity +
+              " " +
+              address.post +
+              " " +
+              address.dist +
+              " " +
+              address.state}
+          </address>
+          <p>Pincode :{address.zip}</p>
+          <p>Phone Number :{address.phone}</p>
+          <p>Alternet Phone Number :{address.aphone}</p>
+        </div>
       </div>
 
       <div className="place-order-time">
-        <div>Time Slot :</div>
+        <div className="order-border-style">Time Slot :</div>
         <div>{timeslot}</div>
       </div>
       <div className="place-order-payment">
-        <div>Payment :</div>
+        <div className="order-border-style">Payment :</div>
         <div>{paymentMod + "  "} : 599</div>
       </div>
     </div>
