@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Context from "../../../Context";
 import { makeStyles } from "@material-ui/core/styles";
@@ -45,9 +45,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header(props) {
-  const { totalQuntity, auth, isAuthenticate, singOut } = useContext(Context);
+  const { totalQuntity, isAuthenticate, singOut } = useContext(Context);
   let history = useHistory();
-  const [isAuth, setIsAuth] = useState(null);
   const classes = useStyles();
 
   const handelCart = () => {

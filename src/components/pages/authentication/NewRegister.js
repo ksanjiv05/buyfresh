@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 
@@ -59,14 +59,14 @@ const NewRegister = (props) => {
     });
   };
 
-  useEffect(() => {
-    console.log(
-      sessionStorage.getItem("phoneNumber"),
-      "is aut ----idisAuthenticate--",
-      isAuthenticate
-    );
-  }, []);
-  const emailregx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  // useEffect(() => {
+  //   console.log(
+  //     sessionStorage.getItem("phoneNumber"),
+  //     "is aut ----idisAuthenticate--",
+  //     isAuthenticate
+  //   );
+  // }, []);
+  // const emailregx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return (
     <div className="account-container">
       <div className="account-left"></div>

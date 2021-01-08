@@ -13,7 +13,7 @@ const TimeSlot = (props) => {
         let slot = "slot" + (i + 1);
 
         return (
-          <div className="time-slot">
+          <div className="time-slot" key={i}>
             <input
               type="radio"
               name="timeslot"

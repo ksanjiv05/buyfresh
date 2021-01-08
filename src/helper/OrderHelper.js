@@ -47,8 +47,7 @@ const OrderHelper = {
 
   GetOrder: async function GetOrder(uid, callback) {
     const user = await UserUtil.GetUser(uid);
-    console.log("order", user.orders);
-    const orders = [];
+
     if (user && user.orders.length > 0) {
       await user.orders.map(async (orderId) => {
         const orderRef = db.collection(DatabaseCollections.Orders).doc(orderId);
@@ -57,28 +56,9 @@ const OrderHelper = {
         if (order.exists) {
           console.log("order =", order.data());
           callback(order.data());
-          // orders.push(order.data());
         }
       });
-
-      // await orderRef.get().then((snapshot) => {
-      //   snapshot.forEach((doc) => orders.push(doc.data()));
-      // });
     }
-
-    // if (orders.length > 0) {
-    //   console.log("=========", orders);
-    //   // return orders;
-    // }
-    // const userRef = db.collection(DatabaseCollections.Products).doc(uid);
-    // const doc = await userRef.get();
-    // if (!doc.exists) {
-    //   console.log("No such document!");
-    //   return;
-    // } else {
-    //   console.log("Document data:", doc.data());
-    //   return doc.data();
-    // }
   },
 };
 

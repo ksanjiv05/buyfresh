@@ -1,7 +1,5 @@
 import firebase from "../config/firebase";
-
 import { v4 as uuidv4 } from "uuid";
-const db = firebase.firestore();
 
 const FileUploadHelper = {
   UploadImage: async function UploadImage(data, callback) {

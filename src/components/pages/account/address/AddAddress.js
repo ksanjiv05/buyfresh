@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
 import InputWithoutIcon from "../../../molecules/InputWithoutIcon";
 import WithToast from "../../../../helper/WithToast";
 import addressHelper from "../../../../helper/AddressHelper";
@@ -30,7 +29,6 @@ const Villages = [
   "Laragutu",
 ];
 const AddAddress = (props) => {
-  console.log(props);
   const classes = useStyles();
   const [address, setAddress] = useState({});
   const [progress, setProgress] = useState(false);
@@ -53,14 +51,6 @@ const AddAddress = (props) => {
         : props.error("Address unable to add");
     });
   };
-  useEffect(async () => {
-    // const addresses = await addressHelper.GetAddresses(
-    //   sessionStorage.getItem("uid")
-    // );
-    // if (addresses) {
-    //   console.log("address ", addresses);
-    // }
-  }, []);
 
   return (
     // <div className="add-addresses">

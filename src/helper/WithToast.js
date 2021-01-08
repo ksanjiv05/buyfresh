@@ -11,7 +11,7 @@ const toastObj = {
 
 const WithToast = (OrginalComponent) => {
   const WithHOC = (props) => {
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const success = (msg) => {
       toastObj.variant = "success";
       enqueueSnackbar(msg, toastObj);

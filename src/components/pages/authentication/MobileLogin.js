@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import InputWithoutIcon from "../../molecules/InputWithoutIcon";
+
 import PhoneAuth from "../../molecules/PhoneAuth";
 import Context from "../../../Context";
 import WithToast from "../../../helper/WithToast";
@@ -14,35 +14,33 @@ const buttonTheam = {
 };
 
 function MobileLogin(props) {
-  console.log("--", props);
-  const [data, setData] = useState({});
-  const { auth, isAuthenticate } = useContext(Context);
+  const { isAuthenticate } = useContext(Context);
   const history = useHistory();
 
   // signInWithEmailPassword
-  const handleChange = (ev) => {
-    const { name, value } = ev.target;
-    console.log(value, data);
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // const handleChange = (ev) => {
+  //   const { name, value } = ev.target;
+  //   console.log(value, data);
+  //   setData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
 
-  const handleEmailPasswordAuth = () => {
-    console.log("email", data);
+  // const handleEmailPasswordAuth = () => {
+  //   console.log("email", data);
 
-    auth.signInWithEmailPassword(data.Email, data.Password, (status) => {
-      console.log("singed email", status);
-      let msg = status ? "You are successfully loged in" : "Loged in failed";
-      status ? props.success(msg) : props.error(msg);
-    });
-  };
+  //   auth.signInWithEmailPassword(data.Email, data.Password, (status) => {
+  //     console.log("singed email", status);
+  //     let msg = status ? "You are successfully loged in" : "Loged in failed";
+  //     status ? props.success(msg) : props.error(msg);
+  //   });
+  // };
 
   useEffect(() => {
     if (isAuthenticate) history.push("/profile");
   }, [isAuthenticate]);
-  const emailregx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  // const emailregx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   return (
     <div className="account-container">

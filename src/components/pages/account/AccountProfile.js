@@ -171,14 +171,14 @@ const AccountProfile = (props) => {
           >
             MY ADDRESSES
           </Button>
-          <Button
+          {/* <Button
             variant="contained"
             color="secondary"
             style={buttonTheam}
             // className={classes.button}
           >
             CHANGE PASSWORD
-          </Button>
+          </Button> */}
         </div>
       </div>
       {loderx ? <Spinner /> : ""}

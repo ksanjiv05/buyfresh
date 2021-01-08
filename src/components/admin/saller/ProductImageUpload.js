@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import CloudDoneIcon from "@material-ui/icons/CloudDone";
 import FileUploadHelper from "../../../helper/FileUploadHelper";

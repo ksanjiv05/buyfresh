@@ -7,8 +7,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import firebase from "../../config/firebase";
-import DatabaseCollections from "../../helper/Constants";
-import UserUtil from "../../helper/StoreUsers";
 
 const FileDialog = (props) => {
   const [image, setImage] = React.useState(null);

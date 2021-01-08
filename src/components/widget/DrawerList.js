@@ -26,13 +26,13 @@ const useStyles = makeStyles({
 const DrawerList = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const { auth, isAuthenticate, singOut } = useContext(Context);
 
   function handleListKeyDown(event) {
     if (event.key === "Tab") {
       event.preventDefault();
-      setOpen(false);
+      // setOpen(false);
     }
   }
   return (

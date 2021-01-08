@@ -1,12 +1,11 @@
 import React from "react";
-import CartButton from "../molecules/CartButton";
 
 const CartItemDetails = (props) => {
-  const { productImg, id, price, quntity } = props.cartItem;
+  const { productImg, ProductId, price, quntity } = props.cartItem;
   return (
-    <tr key={id}>
+    <tr key={ProductId}>
       <td>
-        <img src={productImg} className="add-cart-img" />
+        <img src={productImg} className="add-cart-img" alt="cart-img" />
       </td>
       <td>{price}</td>
       <td></td>

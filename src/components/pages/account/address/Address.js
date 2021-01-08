@@ -11,13 +11,13 @@ const Address = (props) => {
   const [loding, setLoding] = useState(false);
   const history = useHistory();
   const handleSelect = (v) => {
-    console.log(v, "---------", props);
     if (props.isCart) {
       props.handleChange("address", v);
     }
   };
   useEffect(async () => {
     setLoding(true);
+
     const user = await userUtil.GetUser(sessionStorage.getItem("uid"));
     console.log("556", user && user.addresses);
     let addressData = [];

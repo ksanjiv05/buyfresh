@@ -40,7 +40,6 @@ const Cart = () => {
       })
     );
     addCartValue(subtotal);
-    console.log("++++++++++++++++++");
   }, [totalCart]);
 
   useEffect(() => {

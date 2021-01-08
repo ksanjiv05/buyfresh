@@ -1,7 +1,6 @@
 import firebase from "../config/firebase";
 import DatabaseCollections from "../helper/Constants";
 import { v4 as uuidv4 } from "uuid";
-import userUtil from "./StoreUsers";
 const db = firebase.firestore();
 
 const AddressUtil = {

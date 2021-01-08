@@ -18,7 +18,6 @@ const CardM = (props) => {
     price: 0,
     pname: "",
     productImg: "",
-    pname: "",
   });
 
   const handelClick = (value) => {
@@ -52,7 +51,7 @@ const CardM = (props) => {
   useEffect(() => {
     addToCart(cart);
     // props.handelCart(cart);
-  }, [cart]);
+  }, [cart, addToCart]);
   useEffect(() => {
     for (let i = 0; i < totalCart.length; i++) {
       if (totalCart[i].ProductId === ProductId) {
@@ -65,7 +64,7 @@ const CardM = (props) => {
         });
       }
     }
-  }, [totalCart, ProductId]);
+  }, [totalCart, ProductId, productImg]);
 
   return (
     <div

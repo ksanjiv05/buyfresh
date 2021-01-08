@@ -44,7 +44,3 @@ export default function PlaceOrder(props) {
     </div>
   );
 }
-
-// __proto__: Object
-// paymentMod: "cod"
-// timeslot: "5:00PM-7:00PM"

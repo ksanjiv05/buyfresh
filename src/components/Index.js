@@ -11,7 +11,7 @@ import AccountProfile from "./pages/account/AccountProfile";
 import Addresses from "./pages/account/address/Address";
 import Register from "./pages/authentication/Register";
 import NewRegister from "./pages/authentication/NewRegister";
-import MyOrder from "./pages/orders/MyOrder";
+// import MyOrder from "./pages/orders/MyOrder";
 import Orders from "./pages/orders/Orders";
 import MobileLogin from "./pages/authentication/MobileLogin";
 import AdminIndex from "./admin/AdminIndex";
@@ -47,7 +47,7 @@ const Index = () => {
           <Route exact path="/profile" render={(props) => <AccountProfile />} />
           <Route exact path="/address" render={(props) => <Addresses />} />
           <Route exact path="/order" render={(props) => <Orders />} />
-          <Route exact path="/order/descp" render={(props) => <MyOrder />} />
+          {/* <Route exact path="/order/descp" render={(props) => <MyOrder />} /> */}
 
           {/*
 

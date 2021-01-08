@@ -13,7 +13,6 @@ const InputWithoutIcon = ({
   errorMsg,
   inputProps,
 }) => {
-  console.log(isError, "error", errorMsg);
   name = name == undefined || name == null ? lable : lable && name;
   return (
     <div>

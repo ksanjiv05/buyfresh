@@ -1,14 +1,12 @@
 import React, { useState, useContext } from "react";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import Facebook from "@material-ui/icons/Facebook";
 // import Facebook from "@material-ui/icons/";
 import InputWithoutIcon from "../../molecules/InputWithoutIcon";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 import firebase from "../../../config/firebase";
 import Context from "../../../Context";
-import firebasex from "firebase";
 import Valid from "../../../helper/Validation";
 import { useSnackbar } from "notistack";
 
@@ -29,7 +27,7 @@ const Register = () => {
   const [data, setData] = useState({});
   const [isErrors, setIsErrors] = useState(true);
   const [progress, setProgress] = useState(1);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const { auth } = useContext(Context);
 
   const handleChange = (ev) => {
