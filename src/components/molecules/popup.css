@@ -1,0 +1,21 @@
+.popup-container {
+}
+.icon-container {
+  position: fixed;
+  /* display: none; */
+  height: 40px;
+  top: 45%;
+  left: 48%;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(255 255 255);
+  z-index: 2;
+  cursor: pointer;
+  padding: 9px;
+  width: 40px;
+  box-shadow: 6px 5px 8px #948787;
+  padding: 18px;
+}
+.otp-text {
+  line-height: 46px;
+}

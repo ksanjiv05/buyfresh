@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { SnackbarProvider } from "notistack";
 import "./App.css";
 import Index from "./components/Index";
-import axios from "axios";
+
 import Auth from "./auth/Auth";
 import Context from "./Context";
 import Spinner from "./components/molecules/Spinner";
-import AddProduct from "./components/admin/saller/AddProduct";
+
+import ProductHelper from "./helper/ProductHelper";
 
 class App extends Component {
   constructor(props) {
@@ -33,11 +34,13 @@ class App extends Component {
         totalCart: documentData.totalCart,
         products: documentData.products,
       });
+      this.setState({ loding: false });
     } else {
-      const products = await axios.get(
-        "https://buyfreshapi.herokuapp.com/api/products"
-      );
-      this.setState({ products: products.data.products });
+      ProductHelper.GetProducts().then((pd) => {
+        console.log("Products   ------", pd);
+        this.setState({ products: pd });
+        this.setState({ loding: false });
+      });
     }
     console.log("access token", sessionStorage.getItem("accessToken"));
     let token = sessionStorage.getItem("accessToken");
@@ -45,12 +48,12 @@ class App extends Component {
       this.auth.refreshToken();
     }
     token = sessionStorage.getItem("accessToken");
+    this.auth.isSinghedIn();
     let isValidToken = this.auth.decodeToken(token);
     if (isValidToken) {
       console.log("token is valid");
       this.setState({ isAuthenticate: true });
     } else {
-      console.log("token is not valid");
       this.setState({ isAuthenticate: false });
       this.auth.refreshToken();
       token = sessionStorage.getItem("accessToken");
@@ -60,18 +63,17 @@ class App extends Component {
       // (window.location.href = "/login")
     }
 
-    this.setState({ loding: false });
+    // this.setState({ loding: false });
   }
 
   addToCart = (cart) => {
-    console.log(this.state.cart, "is cart come ", cart);
     let totalCart = this.state.totalCart;
-    if (cart.id === "") return;
-    if (totalCart.length === 0 && cart.id !== "") totalCart.push(cart);
+    if (cart.ProductId === "") return;
+    if (totalCart.length === 0 && cart.ProductId !== "") totalCart.push(cart);
     else {
       let cartAvailable = true;
       for (let index = 0; index < totalCart.length; index++) {
-        if (totalCart[index].id === cart.id) {
+        if (totalCart[index].ProductId === cart.ProductId) {
           if (cart.quntity === 0) {
             // this.state.totalCart = [];
           }

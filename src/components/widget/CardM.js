@@ -10,15 +10,15 @@ const addQuntity = 1;
 
 const CardM = (props) => {
   const { addToCart, totalCart } = useContext(Context);
-  const { shortDesc, price, id, name, stock } = props.value;
+  const { shortDesc, price, ProductId, pname, productImg, stock } = props.value;
 
   const [cart, setCart] = useState({
-    id: "",
+    ProductId: "",
     quntity: 0,
     price: 0,
-    shortDesc: "",
-    img: "",
-    name: "",
+    pname: "",
+    productImg: "",
+    pname: "",
   });
 
   const handelClick = (value) => {
@@ -29,16 +29,23 @@ const CardM = (props) => {
     // });
   };
 
-  const handelCart = async (id, price, shortDesc, quntity, imgUrl) => {
+  const handelCart = async (
+    ProductId,
+    price,
+    pname,
+
+    quntity,
+    productImg
+  ) => {
     let Finalquntity = cart.quntity + quntity;
 
     setCart((prevData) => ({
       ...prevData,
-      id: id,
+      ProductId: ProductId,
       quntity: Finalquntity,
       price: price,
-      shortDesc: shortDesc,
-      img: imgUrl,
+      pname: pname,
+      productImg: productImg,
     }));
   };
 
@@ -48,34 +55,30 @@ const CardM = (props) => {
   }, [cart]);
   useEffect(() => {
     for (let i = 0; i < totalCart.length; i++) {
-      if (totalCart[i].id === id) {
+      if (totalCart[i].ProductId === ProductId) {
         setCart({
-          id: id,
+          ProductId: ProductId,
           quntity: totalCart[i].quntity,
           price: totalCart[i].price,
-          shortDesc: totalCart[i].shortDesc,
-          img: "",
+          pname: totalCart[i].pname,
+          productImg: productImg,
         });
       }
     }
-  }, [totalCart, id]);
+  }, [totalCart, ProductId]);
 
   return (
     <div
       onClick={() => handelClick(props.value)}
-      key={id}
+      key={ProductId}
       className="card-root">
       <div className="card">
-        <img
-          src="https://www.treehugger.com/thmb/BNr2j0GvF4E385InF3D25DHXlPM=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2017__12__Ripe_tomatoes_on_vine-68ec0261a1394fcc8682f89d308b941a.jpg"
-          className="card-img"
-          alt="product"
-        />
-        <p className="item-name">{name}</p>
+        <img src={productImg} className="card-img" alt="product" />
+        <p className="item-name">{pname}</p>
         <div className="optionGroup">
           <p className="item-name">{1 + " kg"}</p>
           <div>
-            <Rating name="read-only" value={3} readOnly />
+            <Rating name="read-only" value={4} readOnly />
           </div>
         </div>
         <div className="optionGroup">
@@ -86,7 +89,9 @@ const CardM = (props) => {
               color="default"
               // className={classes.button}
               style={{ marginLeft: "5px" }}
-              onClick={() => handelCart(id, price, shortDesc, addQuntity, "")}
+              onClick={() =>
+                handelCart(ProductId, price, pname, addQuntity, productImg)
+              }
               startIcon={<AddShoppingCartIcon />}>
               Add Cart
             </Button>

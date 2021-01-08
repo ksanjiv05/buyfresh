@@ -15,9 +15,15 @@ const FileDialog = (props) => {
 
   const handleChange = (e) => {
     const file = e.target.files[0];
+
+    console.log("img size ", file.size);
     setImage((imageFile) => file);
   };
   const updateProfile = () => {
+    if (image.size / 1024 > 150) {
+      props.error("file size do not be greater then 150kb");
+      return;
+    }
     const storageRef = firebase.storage().ref();
     const fileRef = storageRef.child(image.name);
     fileRef
@@ -26,7 +32,8 @@ const FileDialog = (props) => {
         console.log("Uploaded a file", v.metadata, "---", v.totalBytes);
         v.ref.getDownloadURL().then(async (dw) => {
           const data = { photoURL: dw, uid: sessionStorage.getItem("uid") };
-          UserUtil.UpdateUser(data, (status) => {
+          //UserUtil.UpdateUser
+          props.auth.updateProfile(data, (status) => {
             if (status) {
               props.setImageUrl(dw);
               props.success("You are updated successfully ");
@@ -59,7 +66,7 @@ const FileDialog = (props) => {
             margin="dense"
             id="name"
             onChange={(e) => handleChange(e)}
-            label="Pic Address"
+            label="Profile Image"
             type="file"
             fullWidth
           />

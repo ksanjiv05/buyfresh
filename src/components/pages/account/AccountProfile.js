@@ -20,6 +20,7 @@ const buttonTheam = {
 const AccountProfile = (props) => {
   const history = useHistory();
   const [loder, setLoder] = useState(false);
+  const [loderx, setLoderx] = useState(false);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
   const [isUpdate, setIsUpdate] = useState(false);
@@ -45,22 +46,24 @@ const AccountProfile = (props) => {
 
   const handleSave = async () => {
     console.log("save data ", data);
-    setLoder(true);
+    setLoderx(true);
 
     data.uid = sessionStorage.getItem("uid");
-    UserUtil.StoreUsers(data, (status) => {
+    UserUtil.UpdateUser(data, (status) => {
       status
         ? props.success("You are updated successfully ")
         : props.error("Unable to update you ");
+      setLoderx(false);
     });
     setIsUpdate(false);
-    setLoder(false);
   };
 
   useEffect(async () => {
+    // auth.isSinghedIn();
     if (!isAuthenticate) history.push("/login");
     setLoder(true);
-    console.log(sessionStorage.getItem("uid"), "user data", data);
+
+    console.log(loder, "user data", data);
     if (!sessionStorage.getItem("uid")) {
       console.log("uid empty");
       return;
@@ -80,8 +83,15 @@ const AccountProfile = (props) => {
         {/* <h1>Profile</h1> */}
         <div style={{ display: "contents" }}>
           <img
+            // src={
+            //   imageUrl && imageUrl.length > 5 ? imageUrl : data && data.photoURL
+            // }
             src={
-              imageUrl && imageUrl.length > 5 ? imageUrl : data && data.photoURL
+              auth.auth0.currentUser != null
+                ? auth.auth0.currentUser.photoURL
+                  ? auth.auth0.currentUser.photoURL
+                  : ""
+                : ""
             }
             // src="https://firebasestorage.googleapis.com/v0/b/buyfreshbro.appspot.com/o/Screenshot%20(16).png?alt=media&token=dcb8791e-df07-4f8e-ac82-72d0df96fd47"
             width="50%"
@@ -105,6 +115,7 @@ const AccountProfile = (props) => {
             handleClose={handleClose}
             success={props.success}
             error={props.error}
+            auth={auth}
             setImageUrl={setImageUrl}
           />
         </div>
@@ -113,15 +124,15 @@ const AccountProfile = (props) => {
         <div className="mobile-responsive">
           <CustomInput
             lable="First Name"
-            name="First"
+            name="first"
             placeholder="Enter your name"
-            value={data && data.First}
+            value={data && data.first}
             handleChange={handleChange}
           />
           <CustomInput
             lable="Last Name"
-            name="Last"
-            value={data && data.Last}
+            name="last"
+            value={data && data.last}
             placeholder="Enter your name"
             handleChange={handleChange}
           />
@@ -129,15 +140,15 @@ const AccountProfile = (props) => {
             lable="Contact Number"
             name="phoneNumber"
             nonEditable={true}
-            value={data && data.phoneNumber}
+            value={sessionStorage.getItem("phoneNumber")}
             placeholder="Enter your number"
             handleChange={handleChange}
           />
           <CustomInput
             lable="Email"
-            name="Email"
+            name="email"
             placeholder="Enter your email"
-            value={data && data.Email}
+            value={data && data.email}
             handleChange={handleChange}
           />
           <Button
@@ -170,6 +181,7 @@ const AccountProfile = (props) => {
           </Button>
         </div>
       </div>
+      {loderx ? <Spinner /> : ""}
     </div>
   );
 };

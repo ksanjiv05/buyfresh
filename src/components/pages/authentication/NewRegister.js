@@ -5,12 +5,11 @@ import SaveIcon from "@material-ui/icons/Save";
 import InputWithoutIcon from "../../molecules/InputWithoutIcon";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
-import firebase from "../../../config/firebase";
 import Context from "../../../Context";
 import Valid from "../../../helper/Validation";
 import PhoneAuth from "../../molecules/PhoneAuth";
-import DatabaseCollections from "../../../helper/Constants";
 import WithToast from "../../../helper/WithToast";
+import UserUtil from "../../../helper/StoreUsers";
 
 const buttonTheam = {
   width: "100%",
@@ -52,18 +51,12 @@ const NewRegister = (props) => {
       props.error("Something went to wrong");
       return;
     }
-    const db = firebase.firestore();
-    await db
-      .collection(DatabaseCollections.Users)
-      .doc(sessionStorage.getItem("uid"))
-      .set(data)
-      .then((result) => {
-        props.success("You are register successfully ");
-      })
-      .catch((err) => {
-        console.log("userr err", err);
-        props.error("Unable to register you ");
-      });
+    data.uid = sessionStorage.getItem("uid");
+    UserUtil.UpdateUser(data, (status) => {
+      status
+        ? props.success("You are register successfully ")
+        : props.error("Unable to register you ");
+    });
   };
 
   useEffect(() => {
@@ -97,10 +90,11 @@ const NewRegister = (props) => {
             <>
               <InputWithoutIcon
                 lable="First"
+                name="first"
                 placeholder="Enter the first name"
-                isError={data.First && data.First.length < 3}
+                isError={data.first && data.first.length < 3}
                 errorMsg={
-                  data.First && data.First.length < 3
+                  data.first && data.first.length < 3
                     ? "Please Enter valid first name"
                     : ""
                 }
@@ -109,10 +103,11 @@ const NewRegister = (props) => {
               />
               <InputWithoutIcon
                 lable="Last"
+                name="last"
                 placeholder="Enter the last name"
-                isError={data.Last && data.Last.length < 3}
+                isError={data.last && data.last.length < 3}
                 errorMsg={
-                  data.Last && data.Last.length < 3
+                  data.last && data.last.length < 3
                     ? "Please Enter valid last name"
                     : ""
                 }

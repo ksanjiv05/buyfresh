@@ -4,7 +4,10 @@ import Context from "../../Context";
 import firebase from "firebase/app";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import OtpInput from "react-otp-input";
+import Spinner from "./Spinner";
+import WithToast from "../../helper/WithToast";
 
 const buttonTheam = {
   width: "100%",
@@ -13,10 +16,10 @@ const buttonTheam = {
 };
 
 const PhoneAuth = (props) => {
-  console.log(props);
   const { btnMsg } = props;
   const [data, setData] = useState("");
   const [error, setError] = useState(false);
+  const [loder, setLoder] = useState(false);
   const [otp, setOtp] = useState("");
   const [state, setState] = useState(false);
   const { auth } = useContext(Context);
@@ -40,6 +43,7 @@ const PhoneAuth = (props) => {
     }
 
     try {
+      setLoder(true);
       window.appVerifier = new firebase.auth.RecaptchaVerifier(
         "recaptcha-container",
         {
@@ -47,9 +51,9 @@ const PhoneAuth = (props) => {
         }
       );
       const appVerifier = window.appVerifier;
-
       auth.signInWithPhone("+91" + data, appVerifier, (status) => {
         console.log("what is v ", status);
+        setLoder(false);
         let msg = status ? "OTP successfully send" : "OTP sending failed";
         status ? props.success(msg) : props.error(msg);
 
@@ -57,21 +61,25 @@ const PhoneAuth = (props) => {
       });
     } catch (err) {
       console.log(err);
+      setLoder(false);
     }
   };
 
   const varifyCode = () => {
+    setLoder(true);
     auth.varifyOTP(otp, (status) => {
+      setLoder(false);
       let msg = status
         ? "Mobile Number successfully varified"
         : "OTP varification failed";
       status ? props.success(msg) : props.error(msg);
       if (status) {
+        setState(status);
         history.goBack();
         history.go(0);
       }
-
-      setState(status);
+      setOtp("");
+      // setState(status);
     });
   };
 
@@ -96,6 +104,11 @@ const PhoneAuth = (props) => {
           //     .toString()
           //     .slice(0, 10);
           // }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">+91</InputAdornment>
+            ),
+          }}
         />
       ) : (
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -123,11 +136,12 @@ const PhoneAuth = (props) => {
         {!state ? btnMsg : "VARIFY OTP"}
       </Button>
       <div id="recaptcha-container"></div>
+      {loder ? <Spinner /> : ""}
     </div>
   );
 };
 
-export default PhoneAuth;
+export default WithToast(PhoneAuth);
 
 /* <NumberFormat
           prefix={"+91"}

@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import OrderHelper from "../../../helper/OrderHelper";
 import "./order.css";
 
 const Orders = () => {
   const history = useHistory();
+  const [order, setOrder] = useState([]);
+  useEffect(() => {
+    OrderHelper.GetOrder(sessionStorage.getItem("uid"), (order) => {
+      console.log("o--------", order);
+      setOrder((prevData) => [...prevData, order]);
+    });
+  }, []);
   return (
     <div className="account-container">
-      <div className="account-left" style={{ width: "30%" }}></div>
+      <div className="account-left" style={{ width: "30%" }}>
+        {console.log("////", order)}
+      </div>
       <div className="account-right" style={{ width: "66%" }}>
         <div
           className="order-conaint"

@@ -1,18 +1,26 @@
 import firebase from "../config/firebase";
 import DatabaseCollections from "../helper/Constants";
+import { v4 as uuidv4 } from "uuid";
 import userUtil from "./StoreUsers";
 const db = firebase.firestore();
 
 const AddressUtil = {
   StoreAddress: async function StoreAddress(data, callback) {
+    const addressuid = uuidv4();
     await db
       .collection(DatabaseCollections.Addresses)
-      .doc(data.uid)
+      .doc(addressuid)
       .set(data)
       .then((result) => {
-        console.log("Address added successfully ", result);
+        console.log("Address added successfully ");
+        const userData = {
+          addressid: addressuid,
+          uid: data.uid,
+        };
 
-        callback(true);
+        this.UpdateAddress(userData, (s) => {
+          callback(s);
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -21,10 +29,10 @@ const AddressUtil = {
   },
   UpdateAddress: async function UpdateAddress(data, callback) {
     await db
-      .collection(DatabaseCollections.Addresses)
+      .collection(DatabaseCollections.Users)
       .doc(data.uid)
       .update({
-        addresses: firebase.firestore.FieldValue.arrayUnion(data.addresses),
+        addresses: firebase.firestore.FieldValue.arrayUnion(data.addressid),
       })
       .then((result) => {
         console.log("User update successfully ");

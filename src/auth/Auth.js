@@ -52,7 +52,6 @@ export default class Auth {
       });
   };
   signInWithPhone = (phoneNumber, appVerifire, callback) => {
-    console.log("---------------------");
     if (!this.auth0) return;
 
     this.auth0
@@ -83,9 +82,14 @@ export default class Auth {
         data.phoneNumber = user.phoneNumber;
         data.photoURL = user.photoURL;
         data.uid = user.uid;
+        data.addresses = [];
+        data.orders = [];
+        data.first = "";
+        data.last = "";
+        data.email = "";
 
         await userUtil
-          .storeUsers(data, (v) => console.log(v))
+          .StoreUsers(data, (v) => console.log(v))
           .then((r) => {
             callback(true);
           });
@@ -101,6 +105,19 @@ export default class Auth {
     // );
     // console.log("users cread", credential.toJSON());
     // callback(true);
+  };
+
+  updateProfile = async (data, callback) => {
+    if (!this.auth0) return;
+    console.log("data  --  ", data);
+    await this.auth0.currentUser
+      .updateProfile(data)
+      .then((v) => {
+        callback(true);
+      })
+      .catch((err) => {
+        callback(false);
+      });
   };
   signInWithFacebook = (provider) => {
     console.log("---------------------");
@@ -190,10 +207,8 @@ export default class Auth {
   isSinghedIn = () => {
     if (!this.auth0) return;
     this.auth0.currentUser &&
-      this.auth0.currentUser.getIdToken().then((t) => {
-        console.log("token ", t);
-      });
-
+      this.auth0.currentUser.getIdToken().then((t) => {});
+    console.log("user  ---- ", this.auth0.currentUser);
     return this.auth0.currentUser;
   };
 
@@ -214,7 +229,6 @@ export default class Auth {
 
   decodeToken = (token) => {
     if (token) {
-      console.log("decode tokevn ", token);
       const decodedToken = jwtDecode(token);
       if (decodedToken.exp * 1000 < Date.now()) {
         return false;

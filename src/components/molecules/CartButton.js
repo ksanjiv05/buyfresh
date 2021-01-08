@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 const addQuntity = 1;
 const subQuntity = -1;
 const CartButton = (props) => {
-  const { shortDesc, price, id } = props.value;
+  const { ProductId, price, pname, productImg } = props.value;
   return (
     <ButtonGroup
       variant="contained"
@@ -16,7 +16,7 @@ const CartButton = (props) => {
       <Button
         // aria-label="reduce"
         onClick={() => {
-          props.handelCart(id, price, shortDesc, subQuntity, "");
+          props.handelCart(ProductId, price, pname, subQuntity, productImg);
         }}>
         <RemoveIcon fontSize="small" />
       </Button>
@@ -26,7 +26,7 @@ const CartButton = (props) => {
       <Button
         aria-label="increase"
         onClick={() => {
-          props.handelCart(id, price, shortDesc, addQuntity, "");
+          props.handelCart(ProductId, price, pname, addQuntity, productImg);
         }}
         //className={classes.button}
       >

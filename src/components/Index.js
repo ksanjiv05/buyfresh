@@ -14,6 +14,7 @@ import NewRegister from "./pages/authentication/NewRegister";
 import MyOrder from "./pages/orders/MyOrder";
 import Orders from "./pages/orders/Orders";
 import MobileLogin from "./pages/authentication/MobileLogin";
+import AdminIndex from "./admin/AdminIndex";
 
 const Index = () => {
   const [state, setState] = React.useState(false);
@@ -39,6 +40,7 @@ const Index = () => {
           <Route exact path="/cart" render={(props) => <Cart />} />
           <Route exact path="/reg" render={(props) => <NewRegister />} />
           <Route exact path="/login" render={(props) => <MobileLogin />} />
+          <Route exect path="/admin/login" render={(props) => <AdminIndex />} />
 
           <Route exact path="/checkout" render={(props) => <CartCheckout />} />
           <Route exact path="/addaddress" render={(props) => <AddAddress />} />

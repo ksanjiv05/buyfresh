@@ -4,6 +4,19 @@ const db = firebase.firestore();
 
 const UserUtil = {
   StoreUsers: async function StoreUsers(data, callback) {
+    console.log("user data to store ", data);
+    const user = await db
+      .collection(DatabaseCollections.Users)
+      .doc(data.uid)
+      .get();
+    if (user.exists) {
+      console.log("user already exist");
+      callback(true);
+      return;
+    }
+
+    data.addresses = [];
+
     await db
       .collection(DatabaseCollections.Users)
       .doc(data.uid)
@@ -37,6 +50,7 @@ const UserUtil = {
     const doc = await userRef.get();
     if (!doc.exists) {
       console.log("No such document!");
+      return;
     } else {
       console.log("Document data:", doc.data());
       return doc.data();

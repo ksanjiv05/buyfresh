@@ -8,6 +8,7 @@ import InputWithoutIcon from "../../../molecules/InputWithoutIcon";
 import WithToast from "../../../../helper/WithToast";
 import addressHelper from "../../../../helper/AddressHelper";
 import "../account.css";
+import Spinner from "../../../molecules/Spinner";
 
 const buttonTheam = {
   width: "100%",
@@ -29,8 +30,10 @@ const Villages = [
   "Laragutu",
 ];
 const AddAddress = (props) => {
+  console.log(props);
   const classes = useStyles();
   const [address, setAddress] = useState({});
+  const [progress, setProgress] = useState(false);
   const handleChange = (ev) => {
     const { name, value } = ev.target;
     setAddress((prevData) => ({
@@ -41,22 +44,22 @@ const AddAddress = (props) => {
 
   const handleAddAddress = () => {
     console.log("address", address);
-
-    const data = { uid: sessionStorage.getItem("uid"), addresses: address };
-    addressHelper.UpdateAddress(data, (status) => {
+    setProgress(true);
+    const data = { uid: sessionStorage.getItem("uid"), address: address };
+    addressHelper.StoreAddress(data, (status) => {
+      setProgress(false);
       status
         ? props.success("Address added successfully")
         : props.error("Address unable to add");
     });
   };
   useEffect(async () => {
-    const addresses = await addressHelper.GetAddresses(
-      sessionStorage.getItem("uid")
-    );
-
-    if (addresses) {
-      console.log("address ", addresses);
-    }
+    // const addresses = await addressHelper.GetAddresses(
+    //   sessionStorage.getItem("uid")
+    // );
+    // if (addresses) {
+    //   console.log("address ", addresses);
+    // }
   }, []);
 
   return (
@@ -151,6 +154,7 @@ const AddAddress = (props) => {
           </Button>
         </div>
       </div>
+      {progress ? <Spinner /> : ""}
     </div>
   );
 };

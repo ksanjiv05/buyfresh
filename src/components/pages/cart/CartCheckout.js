@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -10,6 +10,8 @@ import Addresses from "../account/address/Addresses";
 import TimeSlot from "../../widget/TimeSlot";
 import Payment from "../../widget/Payment";
 import PlaceOrder from "./PlaceOrder";
+import OrderHelper from "../../../helper/OrderHelper";
+import Context from "../../../Context";
 
 const buttonTheam = {
   width: "100%",
@@ -41,7 +43,8 @@ function getStepContent(stepIndex, handleChange) {
     case 0:
       return (
         <div>
-          <Addresses handleChange={handleChange} />
+          {/* <Addresses handleChange={handleChange} /> */}
+          <Address handleChange={handleChange} isCart={true} />
         </div>
       );
     case 1:
@@ -63,6 +66,7 @@ function getStepContent(stepIndex, handleChange) {
 
 export default function CartCheckout() {
   const classes = useStyles();
+  const { totalCart } = useContext(Context);
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = React.useState({});
   const steps = getSteps();
@@ -96,7 +100,23 @@ export default function CartCheckout() {
   };
 
   const handleReset = () => {
-    alert("order placed");
+    const order = {
+      address: data.address.address,
+      uid: data.address.uid,
+      timeslot: data.timeslot,
+      paymentMod: data.paymentMod,
+      products: totalCart,
+    };
+    OrderHelper.CreateOrder(order, (status) => {
+      if (status) {
+        alert("order placed");
+        localStorage.removeItem("cartItemxx");
+      } else {
+        alert("order placed failed");
+      }
+    });
+    console.log("order placed x", order);
+
     // setActiveStep(0);
   };
 
