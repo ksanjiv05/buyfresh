@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory, useLocation } from "react-router-dom";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -65,12 +66,15 @@ function getStepContent(stepIndex, handleChange) {
 }
 
 export default function CartCheckout() {
+  const history = useLocation();
+
   const classes = useStyles();
-  const { totalCart } = useContext(Context);
+  const { totalCart, cartValue, totalQuntity } = useContext(Context);
   const [activeStep, setActiveStep] = React.useState(0);
+  let [subtotal, setSubTotal] = React.useState(0);
   const [data, setData] = React.useState({});
   const steps = getSteps();
-
+  console.log(cartValue, "location ---------------------", history);
   const handleChange = (name, value) => {
     setData((prevData) => ({
       ...prevData,
@@ -106,6 +110,13 @@ export default function CartCheckout() {
       timeslot: data.timeslot,
       paymentMod: data.paymentMod,
       products: totalCart,
+      totalQuntity: totalQuntity,
+      cartValue: subtotal,
+      orderStatus: "Processed",
+      time:
+        new Date().toLocaleDateString() +
+        "  " +
+        new Date().toLocaleTimeString(),
     };
     OrderHelper.CreateOrder(order, (status) => {
       if (status) {
@@ -133,7 +144,11 @@ export default function CartCheckout() {
         {activeStep === steps.length ? (
           <div className="cart-final">
             <Typography className={classes.instructions}>
-              <PlaceOrder data={data} />
+              <PlaceOrder
+                data={data}
+                subtotal={subtotal}
+                setSubTotal={setSubTotal}
+              />
             </Typography>
             <Button onClick={handleReset} style={buttonTheam}>
               Place Order

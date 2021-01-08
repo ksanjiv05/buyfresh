@@ -18,42 +18,25 @@ const Orders = () => {
         {console.log("////", order)}
       </div>
       <div className="account-right" style={{ width: "66%" }}>
-        <div
-          className="order-conaint"
-          onClick={() => history.push("/order/descp")}>
-          <div className="order-status">
-            <img
-              src="https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297__340.jpg"
-              className="order-imagex"
-            />
-          </div>
-          <div className="order-decp">
-            Realme Narzo 20 (Glory Silver, 128 GB) (4 GB RAM)
-          </div>
-          <div className="warup">
-            <div className="order-status">₹ 199</div>
-            <div className="order-status">20/02/2020</div>
-            <div className="order-status">Delivered</div>
-          </div>
-        </div>
-        <div
-          className="order-conaint"
-          onClick={() => history.push("/order/descp")}>
-          <div className="order-status">
-            <img
-              src="https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297__340.jpg"
-              className="order-imagex"
-            />
-          </div>
-          <div className="order-decp">
-            Realme Narzo 20 (Glory Silver, 128 GB) (4 GB RAM)
-          </div>
-          <div className="warup">
-            <div className="order-status">₹ 199</div>
-            <div className="order-status">20/02/2020</div>
-            <div className="order-status">Delivered</div>
-          </div>
-        </div>
+        {order &&
+          order.map((value) => (
+            <div
+              className="order-conaint"
+              onClick={() => history.push("/order/descp")}>
+              <div className="order-status">
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/buyfreshbro.appspot.com/o/gdfghjjnbdseert434567hbvre43r45678uytrffdhgjbhn.png?alt=media&token=986fec71-c9a3-4fb3-8d99-d70d0a69c323"
+                  className="order-imagex"
+                />
+              </div>
+              <div className="order-decp">Grocery Items</div>
+              <div className="warup">
+                <div className="order-status">₹ {value && value.cartValue}</div>
+                <div className="order-status">{value && value.time}</div>
+                <div className="order-status">{value && value.orderStatus}</div>
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );

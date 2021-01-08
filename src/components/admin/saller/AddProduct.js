@@ -6,11 +6,6 @@ import ProductImageUpload from "./ProductImageUpload";
 import ProductHelper from "../../../helper/ProductHelper";
 import WithToast from "../../../helper/WithToast";
 
-// lable,
-// placeholder,
-// handleChange,
-// isError,
-// errorMsg,
 const buttonTheam = {
   width: "100%",
   marginTop: "3%",
@@ -76,6 +71,7 @@ const AddProduct = (props) => {
         placeholder="Enter the short description of product"
         handleChange={handleChange}
       />
+
       <InputWithoutIcon
         lable="description"
         name="description"

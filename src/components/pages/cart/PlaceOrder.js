@@ -1,20 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./cart.css";
 import Context from "../../../Context";
 
 export default function PlaceOrder(props) {
   const { address, timeslot, paymentMod } = props.data;
   const { totalCart } = useContext(Context);
+  // let [subtotal, setSubTotal] = React.useState(0);
+  let subtotal = 0;
 
-  console.log(
-    totalCart,
-    "place order",
-    address.address,
-    "--",
-    timeslot,
-    "==",
-    paymentMod
-  );
+  useEffect(() => {
+    totalCart.map((cartItem) => {
+      props.setSubTotal((subtotal += cartItem.price * cartItem.quntity));
+    });
+  }, []);
   return (
     <div className="place-order-summary">
       <div className="place-order-address">
@@ -39,7 +37,9 @@ export default function PlaceOrder(props) {
       </div>
       <div className="place-order-payment">
         <div className="order-border-style">Payment :</div>
-        <div>{paymentMod + "  "} : 599</div>
+        <div>
+          {paymentMod + "  "} : {props.subtotal}
+        </div>
       </div>
     </div>
   );

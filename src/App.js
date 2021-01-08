@@ -18,6 +18,7 @@ class App extends Component {
       totalCart: [],
       products: [],
       searchValue: "",
+      cartValue: 0,
       loding: true,
       isAdmin: false,
       isAuthenticate: false,
@@ -98,6 +99,10 @@ class App extends Component {
     this.state.totalCart.map((v) => (total = total + v.quntity));
     this.setState({ totalQuntity: total });
   };
+  addCartValue = (subtotal) => {
+    console.log("total", subtotal);
+    this.setState({ cartValue: subtotal });
+  };
   handleSearch = (value) => {
     this.setState({ searchValue: value });
   };
@@ -130,6 +135,7 @@ class App extends Component {
           addToCart: this.addToCart,
           handleSearch: this.handleSearch,
           singOut: this.singOut,
+          addCartValue: this.addCartValue,
           auth: this.auth,
           clearCart: this.clearCart,
           //isSingIn: this.auth.isSinghedIn,

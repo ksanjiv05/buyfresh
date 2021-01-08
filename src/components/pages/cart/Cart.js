@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = () => {
-  const { totalCart, totalQuntity, clearCart } = useContext(Context);
+  const { totalCart, totalQuntity, clearCart, addCartValue } = useContext(
+    Context
+  );
   const history = useHistory();
   const classes = useStyles();
   let [subtotal, setSubTotal] = useState(0);
@@ -37,7 +39,7 @@ const Cart = () => {
         return cartItem.quntity && <CartItemDetails cartItem={cartItem} />;
       })
     );
-
+    addCartValue(subtotal);
     console.log("++++++++++++++++++");
   }, [totalCart]);
 
@@ -116,7 +118,11 @@ const Cart = () => {
                 variant="contained"
                 color="default"
                 style={{ marginLeft: "5px" }}
-                onClick={() => history.push("/checkout")}
+                onClick={() =>
+                  history.push("/checkout", {
+                    totalQuntity: "totalQuntity",
+                  })
+                }
                 // startIcon={<AddShoppingCartIcon />}
               >
                 Checkout
