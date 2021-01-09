@@ -2,9 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
 import addressHelper from "../../../../helper/AddressHelper";
+import Button from "@material-ui/core/Button";
 import userUtil from "../../../../helper/StoreUsers";
 import styles from "./Address.module.css";
 import Spinner from "../../../molecules/Spinner";
+
+const buttonTheam = {
+  width: "100%",
+  // marginLeft: "1.5%",
+  marginTop: "3%",
+  backgroundColor: "rgb(89, 6, 95)",
+};
 
 const Address = (props) => {
   const [addresses, setAddresses] = useState([]);
@@ -36,7 +44,23 @@ const Address = (props) => {
       ) : (
         <>
           <h1 className={styles.address_heading}>Address</h1>
-
+          <div className={styles.addIconMob}>
+            <div style={{ width: "100%", margin: "5px 10px" }}>
+              <Button
+                variant="contained"
+                color="secondary"
+                style={buttonTheam}
+                onClick={() =>
+                  history.push("/addaddress", {
+                    addressid: addresses && addresses[0],
+                  })
+                }
+                // className={classes.button}
+                startIcon={<AddIcon />}>
+                ADD ADDRESSE
+              </Button>
+            </div>
+          </div>
           <div className={styles.addr_card}>
             {addresses &&
               addresses.map((v, i) => (
