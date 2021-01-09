@@ -10,10 +10,11 @@ const HomePage = () => {
 
   useEffect(() => {
     {
-      searchValue.length > 0
+      console.log("--svs-", searchValue);
+      searchValue && searchValue.length > 0
         ? seTtempProduct(
             products.filter((p) =>
-              p.name.toLowerCase().includes(searchValue.toLowerCase())
+              p.pname.toLowerCase().includes(searchValue.toLowerCase())
             )
           )
         : seTtempProduct(products);

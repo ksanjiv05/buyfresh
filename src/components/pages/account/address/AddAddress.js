@@ -30,7 +30,13 @@ const Villages = [
 ];
 const AddAddress = (props) => {
   const classes = useStyles();
-  const [address, setAddress] = useState({});
+  const [address, setAddress] = useState({
+    name: "",
+    house: "",
+    vill: "",
+    socity: "",
+    phone: "",
+  });
   const [progress, setProgress] = useState(false);
   const handleChange = (ev) => {
     const { name, value } = ev.target;
@@ -41,15 +47,37 @@ const AddAddress = (props) => {
   };
 
   const handleAddAddress = () => {
-    console.log("address", address);
+    console.log(
+      address.name === undefined || (address.name && address.name.length < 4),
+      "address",
+      address
+    );
+    if (address.name.length < 3) {
+      props.error("Please enter valid name");
+      return;
+    }
+    if (address.vill.length < 3) {
+      props.error("Please choose valid village");
+      return;
+    }
+    if (address.socity.length < 3) {
+      props.error("Please enter valid socity");
+      return;
+    }
+    if (address.phone.length < 10) {
+      props.error("Please enter valid phone number");
+      return;
+    }
     setProgress(true);
     const data = { uid: sessionStorage.getItem("uid"), address: address };
-    addressHelper.StoreAddress(data, (status) => {
-      setProgress(false);
-      status
-        ? props.success("Address added successfully")
-        : props.error("Address unable to add");
-    });
+    console.log("909000");
+    // addressHelper.StoreAddress(data, (status) => {
+    //   setProgress(false);
+    //   status
+    //     ? props.success("Address added successfully")
+    //     : props.error("Address unable to add");
+    // });
+    setProgress(false);
   };
 
   return (
@@ -59,6 +87,12 @@ const AddAddress = (props) => {
       <div className="account-right">
         <div style={{ padding: "4px 15px 15px 15px" }}>
           <InputWithoutIcon
+            isError={address && address.name && address.name.length < 3}
+            errorMsg={
+              address && address.name && address.name.length < 3
+                ? "Please enter valid name"
+                : ""
+            }
             lable="Name"
             name="name"
             placeholder="enter the name"
@@ -70,6 +104,12 @@ const AddAddress = (props) => {
             handleChange={handleChange}
           />
           <InputWithoutIcon
+            isError={address && address.socity && address.socity.length < 3}
+            errorMsg={
+              address && address.socity && address.socity.length < 3
+                ? "Please enter valid input"
+                : ""
+            }
             lable="Street / Society "
             name="socity"
             handleChange={handleChange}
@@ -126,9 +166,9 @@ const AddAddress = (props) => {
           <InputWithoutIcon
             lable="Phone"
             name="phone"
-            isError={address.Phone && address.Phone.length < 10}
+            isError={address && address.phone && address.phone.length < 10}
             errorMsg={
-              address.Phone && address.Phone.length < 10
+              address && address.phone && address.phone.length < 10
                 ? "Please enter valid phone number"
                 : ""
             }

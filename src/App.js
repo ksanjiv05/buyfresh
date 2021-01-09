@@ -148,11 +148,11 @@ class App extends Component {
           ) : (
             <Index />
           )} */}
-          {this.state.loding ? (
+          {/* {this.state.loding ? (
             <Spinner />
-          ) : (
-            <Index isAuthenticate={this.state.isAuthenticate} />
-          )}
+          ) : ( */}
+          <Index isAuthenticate={this.state.isAuthenticate} />
+          {/* )} */}
         </SnackbarProvider>
       </Context.Provider>
     );
