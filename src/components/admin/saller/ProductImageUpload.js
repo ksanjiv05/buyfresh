@@ -16,6 +16,10 @@ const ProductImageUpload = (props) => {
     setIsUpload(false);
   };
   const UploadImage = () => {
+    if (!image) {
+      alert("please choose image");
+      return;
+    }
     if (image.size / 1024 > 150) {
       console.log("file size do not be greater then 150kb");
       return;

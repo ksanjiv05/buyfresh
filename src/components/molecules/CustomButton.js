@@ -7,7 +7,7 @@ const CustomButton = (props) => {
       <Button
         variant="contained"
         color="default"
-        style={{ marginLeft: "5px" }}
+        style={{ marginLeft: "5px", width: "100%" }}
         onClick={() => props.clearCart()}
         // startIcon={<AddShoppingCartIcon />}
       >

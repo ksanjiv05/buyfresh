@@ -25,9 +25,8 @@ const HomePage = () => {
       <div className="item-filter"></div>
       <div className="item-filter item-container">
         <div className="items">
-          {tempProduct.map((value, index) => (
-            <CardM value={value} />
-          ))}
+          {tempProduct &&
+            tempProduct.map((value, index) => <CardM value={value} />)}
         </div>
       </div>
     </div>

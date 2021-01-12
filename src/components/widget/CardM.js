@@ -12,7 +12,15 @@ const addQuntity = 1;
 const CardM = (props) => {
   const { addToCart, totalCart } = useContext(Context);
   const [loding, setLoding] = useState(true);
-  const { shortDesc, price, ProductId, pname, productImg, stock } = props.value;
+  const {
+    shortDesc,
+    price,
+    ProductId,
+    pname,
+    productImg,
+    unit,
+    stock,
+  } = props.value;
   // const [counter, setCounter] = React.useState(10);
   const [cart, setCart] = useState({
     ProductId: "",
@@ -20,6 +28,7 @@ const CardM = (props) => {
     price: 0,
     pname: "",
     productImg: "",
+    unit: "",
   });
 
   const handelClick = (value) => {
@@ -36,7 +45,8 @@ const CardM = (props) => {
     pname,
 
     quntity,
-    productImg
+    productImg,
+    unit
   ) => {
     let Finalquntity = cart.quntity + quntity;
 
@@ -47,6 +57,7 @@ const CardM = (props) => {
       price: price,
       pname: pname,
       productImg: productImg,
+      unit: unit,
     }));
   };
 
@@ -62,6 +73,7 @@ const CardM = (props) => {
           quntity: totalCart[i].quntity,
           price: totalCart[i].price,
           pname: totalCart[i].pname,
+          unit: totalCart[i].unit,
           productImg: productImg,
         });
       }
@@ -94,33 +106,42 @@ const CardM = (props) => {
           <div className="card">
             <img src={productImg} className="card-img" alt="product" />
             <p className="item-name">{pname}</p>
-            <div className="optionGroup">
-              <p className="item-name">{1 + " kg"}</p>
-              <div>
-                <Rating name="read-only" value={4} readOnly />
+            <div>
+              <div className="optionGroup">
+                <p className="item-name">{unit}</p>
+                <div>
+                  {/* <Rating name="read-only" value={4} readOnly /> */}
+                  <p>₹ {price}</p>
+                </div>
               </div>
-            </div>
-            <div className="optionGroup">
-              <p style={{ display: "inline" }}>₹ {price}</p>
-              {cart.quntity < 1 ? (
-                <Button
-                  variant="contained"
-                  color="default"
-                  // className={classes.button}
-                  style={{ marginLeft: "5px" }}
-                  onClick={() =>
-                    handelCart(ProductId, price, pname, addQuntity, productImg)
-                  }
-                  startIcon={<AddShoppingCartIcon />}>
-                  Add Cart
-                </Button>
-              ) : (
-                <CartButton
-                  value={props.value}
-                  handelCart={handelCart}
-                  quntity={cart.quntity}
-                />
-              )}
+              <div className="optionGroup">
+                {/* <p style={{ display: "inline" }}>₹ {price}</p> */}
+                {cart.quntity < 1 ? (
+                  <Button
+                    variant="contained"
+                    color="default"
+                    // className={classes.button}
+                    style={{ marginLeft: "5px", width: "100%" }}
+                    onClick={() =>
+                      handelCart(
+                        ProductId,
+                        price,
+                        pname,
+                        addQuntity,
+                        productImg
+                      )
+                    }
+                    startIcon={<AddShoppingCartIcon />}>
+                    Add Cart
+                  </Button>
+                ) : (
+                  <CartButton
+                    value={props.value}
+                    handelCart={handelCart}
+                    quntity={cart.quntity}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

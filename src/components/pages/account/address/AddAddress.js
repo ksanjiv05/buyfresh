@@ -71,13 +71,12 @@ const AddAddress = (props) => {
     setProgress(true);
     const data = { uid: sessionStorage.getItem("uid"), address: address };
     console.log("909000");
-    // addressHelper.StoreAddress(data, (status) => {
-    //   setProgress(false);
-    //   status
-    //     ? props.success("Address added successfully")
-    //     : props.error("Address unable to add");
-    // });
-    setProgress(false);
+    addressHelper.StoreAddress(data, (status) => {
+      setProgress(false);
+      status
+        ? props.success("Address added successfully")
+        : props.error("Address unable to add");
+    });
   };
 
   return (

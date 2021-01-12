@@ -48,7 +48,23 @@ const ProductHelper = {
       return doc.data();
     }
   },
-  GetProducts: async function GetProducts(uid) {
+  DeleteProduct: async function DeleteProduct(productId, callback) {
+    console.log("product id com ", productId);
+    const productRef = db
+      .collection(DatabaseCollections.Products)
+      .doc(productId);
+    productRef
+      .delete()
+      .then((v) => {
+        console.log("product delete ", v);
+        callback(true);
+      })
+      .catch((err) => {
+        console.log("err", err);
+        callback(false);
+      });
+  },
+  GetProducts: async function GetProducts() {
     const productRef = db.collection(DatabaseCollections.Products);
     const products = [];
     await productRef.get().then((snapshot) => {
@@ -66,6 +82,18 @@ const ProductHelper = {
       console.log(" data:", products);
       return products;
     }
+  },
+  UpdateProduct: async function UpdateProduct(id, data, callback) {
+    const productRef = db.collection(DatabaseCollections.Products).doc(id);
+    productRef
+      .update(data)
+      .then((v) => {
+        callback(true);
+      })
+      .catch((err) => {
+        console.log("err", err);
+        callback(false);
+      });
   },
 };
 

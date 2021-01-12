@@ -5,6 +5,7 @@ import Index from "./components/Index";
 
 import Auth from "./auth/Auth";
 import Context from "./Context";
+
 import Spinner from "./components/molecules/Spinner";
 
 import ProductHelper from "./helper/ProductHelper";
@@ -33,16 +34,16 @@ class App extends Component {
       this.setState({
         totalQuntity: documentData.totalQuntity,
         totalCart: documentData.totalCart,
-        products: documentData.products,
+        // products: documentData.products,
       });
       this.setState({ loding: false });
-    } else {
-      ProductHelper.GetProducts().then((pd) => {
-        console.log("Products   ------", pd);
-        this.setState({ products: pd });
-        this.setState({ loding: false });
-      });
     }
+    ProductHelper.GetProducts().then((pd) => {
+      console.log("Products   ------", pd);
+      this.setState({ products: pd });
+      this.setState({ loding: false });
+    });
+    //}
     console.log("access token", sessionStorage.getItem("accessToken"));
     let token = sessionStorage.getItem("accessToken");
     if (!token) {
