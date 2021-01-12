@@ -1,0 +1,15 @@
+.unit-list {
+  width: 14%;
+  float: left;
+  margin: 0px 0px 0px 6px;
+}
+.makeStyles-root {
+  height: auto;
+  width: "100%";
+}
+#vertical-tabpanel-0 {
+  width: 100%;
+}
+#vertical-tabpanel-1 {
+  width: 100%;
+}

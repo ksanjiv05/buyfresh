@@ -55,9 +55,9 @@ const ProductImageUpload = (props) => {
           // onMouseDown={handleMouseDownPassword}
         >
           {isUpload ? (
-            <CloudDoneIcon fontSize="large" />
+            <CloudDoneIcon fontSize="large" style={{ color: "#1da221" }} />
           ) : (
-            <CloudUploadIcon fontSize="large" />
+            <CloudUploadIcon fontSize="large" style={{ color: "#59065f" }} />
           )}
         </IconButton>
       </div>

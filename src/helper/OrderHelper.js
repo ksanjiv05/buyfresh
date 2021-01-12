@@ -60,6 +60,18 @@ const OrderHelper = {
       });
     }
   },
+  GetOrders: async function GetOrders() {
+    const orderRef = db.collection(DatabaseCollections.Orders);
+    const orders = [];
+    await orderRef.get().then((snapshot) => {
+      snapshot.forEach((doc) => orders.push(doc.data()));
+    });
+
+    if (orders.length > 0) {
+      console.log(" data:", orders);
+      return orders;
+    }
+  },
 };
 
 export default OrderHelper;

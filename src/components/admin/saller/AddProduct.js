@@ -6,7 +6,7 @@ import ProductImageUpload from "./ProductImageUpload";
 import ProductHelper from "../../../helper/ProductHelper";
 import WithToast from "../../../helper/WithToast";
 import SelectList from "../../molecules/SelectList";
-import { validate } from "uuid";
+import "./saller.css";
 
 const buttonTheam = {
   width: "100%",
@@ -112,11 +112,17 @@ const AddProduct = (props) => {
   return (
     <div
       className="account-container"
-      style={{ width: "95%", marginTop: "50px", padding: "15px" }}>
+      style={{
+        width: "95%",
+
+        padding: "15px",
+        height: "auto",
+        // minHeight: "calc(100vh-50px)",
+      }}>
       <InputWithoutIcon
-        isError={errors.pname.length < 3}
+        isError={data.pname.length < 3}
         errorMsg={
-          errors.pname.length < 3 ? "please enter valid product name" : ""
+          data.pname.length < 3 ? "please enter valid product name" : ""
         }
         lable="Product Name *"
         name="pname"
@@ -124,8 +130,8 @@ const AddProduct = (props) => {
         handleChange={handleChange}
       />
       <InputWithoutIcon
-        isError={errors.stock.length < 1}
-        errorMsg={errors.stock.length < 1 ? "please enter valid stock" : ""}
+        isError={data.stock.length < 1}
+        errorMsg={data.stock.length < 1 ? "please enter valid stock" : ""}
         lable="Product Stock *"
         name="stock"
         placeholder="Enter the stock of product"
@@ -134,9 +140,9 @@ const AddProduct = (props) => {
       <div>
         <div style={{ width: "85%", float: "left" }}>
           <InputWithoutIcon
-            isError={errors.price.length < 1}
+            isError={data.price.length < 1}
             errorMsg={
-              errors.price.length < 1 ? "please enter valid product price" : ""
+              data.price.length < 1 ? "please enter valid product price" : ""
             }
             lable="Product Price "
             name="price"
@@ -144,10 +150,10 @@ const AddProduct = (props) => {
             handleChange={handleChange}
           />
         </div>
-        <div>
+        <div className="unit-list">
           <SelectList
             label="Unit"
-            isError={errors.unit.length < 1}
+            isError={data.unit.length < 1}
             handleChange={handleChange}
             name="unit"
             list={["1kg", "1pc", "250gm", "200gm", "500gm", "750gm"]}
@@ -165,9 +171,9 @@ const AddProduct = (props) => {
       <InputWithoutIcon
         lable="shortDesc"
         name="shortDesc"
-        isError={errors.shortDesc.length < 3}
+        isError={data.shortDesc.length < 3}
         errorMsg={
-          errors.shortDesc.length < 3
+          data.shortDesc.length < 3
             ? "please enter valid product short discription"
             : ""
         }

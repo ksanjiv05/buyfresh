@@ -9,7 +9,7 @@ import Select from "@material-ui/core/Select";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    // minWidth: 120,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -19,13 +19,18 @@ export default function SelectList(props) {
   const classes = useStyles();
   return (
     <div>
-      <InputLabel shrink id="demo-simple-select-placeholder-label-label">
+      <InputLabel
+        shrink
+        id="demo-simple-select-placeholder-label-label"
+        error={props.isError}>
         {props.label}
       </InputLabel>
       <Select
         labelId="demo-simple-select-placeholder-label-label"
         id="demo-simple-select-placeholder-label"
         name={props.name}
+        style={{ width: "90%" }}
+        error={props.isError}
         onChange={props.handleChange}
         displayEmpty
         className={classes.selectEmpty}>
