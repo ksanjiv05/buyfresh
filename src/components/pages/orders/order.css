@@ -12,6 +12,9 @@
   padding: 1%;
   float: left;
 }
+.add-ruppee::before {
+  content: "₹ ";
+}
 .order-imagex {
   width: 60px;
   height: 80px;
@@ -97,7 +100,10 @@
     display: grid;
   }
   .order-status {
-    width: 18%;
+    width: 19%;
+  }
+  .order-decp {
+    width: 30%;
   }
   .MuiTimeline-root {
     float: unset;

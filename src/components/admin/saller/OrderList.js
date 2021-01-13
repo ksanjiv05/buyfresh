@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import OrderHelper from "../../../helper/OrderHelper";
 import ExportCSV from "./ExportCSV";
+import DataGridList from "../saller/DataGridList";
 
 const OrderList = () => {
   const [rowData, setRowData] = useState([]);
@@ -35,6 +36,7 @@ const OrderList = () => {
   ];
 
   const ProductHeader = [
+    { lable: "Order Id", key: "orderId" },
     { label: "Product Name ", key: "pname" },
     { label: "Product Price", key: "price" },
     { label: "Product Order quntity", key: "quntity" },
@@ -42,45 +44,41 @@ const OrderList = () => {
     { label: "Product Img ", key: "productImg" },
   ];
 
-  const additonalHeader = async () => {
-    let exheaders = {};
-    rowData &&
-      rowData.map((v, i) => {
-        v.products.map((v) => {
-          setProduct((prevProduct) => [...prevProduct, v]);
-        });
-      });
-    return true;
-    // console.log("headers ", product);
-  };
   useEffect(async () => {
     setState(false);
     OrderHelper.GetOrders()
       .then(async (pd) => {
-        setRowData(pd);
         console.log("order ", pd);
-        await additonalHeader().then((v) => {
-          v ? setState(true) : setState(false);
+
+        pd.map((v, i) => {
+          v.id = i + 1;
+          v.products.map((prd) => {
+            prd.orderId = v.orderId;
+            setProduct((prevProduct) => [...prevProduct, prd]);
+          });
         });
+        setRowData(pd);
+        setState(true);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-
   return (
     <div>
       {console.log(state, "headers--==- ", product)}
       {state ? (
-        <>
-          <ExportCSV headers={header} data={rowData} />
-          {product.length > 1 ? (
+        <div>
+          <div className="export-data">
+            <ExportCSV headers={header} data={rowData} />
+
             <ExportCSV headers={ProductHeader} data={product} />
-          ) : (
-            ""
-          )}
-        </>
+          </div>
+          <div className="data-grid">
+            <DataGridList loading={!state} columns={header} rows={rowData} />
+          </div>
+        </div>
       ) : (
         ""
       )}

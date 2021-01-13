@@ -31,7 +31,11 @@ const Orders = () => {
               </div>
               <div className="order-decp">Grocery Items</div>
               <div className="warup">
-                <div className="order-status">₹ {value && value.cartValue}</div>
+                <div
+                  className="order-status add-ruppee"
+                  style={{ width: "60px" }}>
+                  {value && value.cartValue}
+                </div>
                 <div className="order-status">{value && value.time}</div>
                 <div className="order-status tooltip">
                   {value && value.orderStatus}

@@ -212,17 +212,21 @@ export default class Auth {
     return this.auth0.currentUser;
   };
 
-  refreshToken = () => {
+  refreshToken = (callback) => {
     this.auth0.onIdTokenChanged((user) => {
       if (user) {
         console.log("user ref ", user);
-
         user.getIdToken().then((token) => {
           sessionStorage.setItem("accessToken", token);
+          const status = this.decodeToken(token);
+          console.log("status token user ", status);
+          callback(status);
         });
         sessionStorage.setItem("phoneNumber", user.phoneNumber);
         sessionStorage.setItem("uid", user.uid);
         console.log("user data", sessionStorage.getItem("phoneNumber"));
+      } else {
+        callback(false);
       }
     });
   };

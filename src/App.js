@@ -47,22 +47,25 @@ class App extends Component {
     console.log("access token", sessionStorage.getItem("accessToken"));
     let token = sessionStorage.getItem("accessToken");
     if (!token) {
-      this.auth.refreshToken();
-    }
-    token = sessionStorage.getItem("accessToken");
-    this.auth.isSinghedIn();
-    let isValidToken = this.auth.decodeToken(token);
-    if (isValidToken) {
-      console.log("token is valid");
-      this.setState({ isAuthenticate: true });
+      this.auth.refreshToken((validUser) => {
+        console.log("user refres ", validUser);
+        this.setState({ isAuthenticate: validUser });
+      });
     } else {
-      this.setState({ isAuthenticate: false });
-      this.auth.refreshToken();
-      token = sessionStorage.getItem("accessToken");
-      if (await this.auth.decodeToken(token))
+      this.auth.isSinghedIn();
+      let isValidToken = this.auth.decodeToken(token);
+      if (isValidToken) {
+        console.log("token is valid");
         this.setState({ isAuthenticate: true });
+      } else {
+        this.setState({ isAuthenticate: false });
+        this.auth.refreshToken();
+        token = sessionStorage.getItem("accessToken");
+        if (await this.auth.decodeToken(token))
+          this.setState({ isAuthenticate: true });
 
-      // (window.location.href = "/login")
+        // (window.location.href = "/login")
+      }
     }
 
     // this.setState({ loding: false });
