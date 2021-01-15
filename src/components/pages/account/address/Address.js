@@ -25,9 +25,8 @@ const Address = (props) => {
   };
   useEffect(async () => {
     setLoding(true);
-
     const user = await userUtil.GetUser(sessionStorage.getItem("uid"));
-    console.log("556", user && user.addresses);
+
     let addressData = [];
     user &&
       user.addresses.map(async (v) => {

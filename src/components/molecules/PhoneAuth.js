@@ -36,7 +36,7 @@ const PhoneAuth = (props) => {
   };
 
   const handleSendOTP = () => {
-    if (data.length != 10) {
+    if (data.length !== 10) {
       setError(true);
       props.error("Please enter valid mobile number");
       return;

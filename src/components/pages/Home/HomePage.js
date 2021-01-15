@@ -9,16 +9,13 @@ const HomePage = () => {
   const [tempProduct, seTtempProduct] = useState([]);
 
   useEffect(() => {
-    {
-      console.log("--svs-", searchValue);
-      searchValue && searchValue.length > 0
-        ? seTtempProduct(
-            products.filter((p) =>
-              p.pname.toLowerCase().includes(searchValue.toLowerCase())
-            )
+    searchValue && searchValue.length > 0
+      ? seTtempProduct(
+          products.filter((p) =>
+            p.pname.toLowerCase().includes(searchValue.toLowerCase())
           )
-        : seTtempProduct(products);
-    }
+        )
+      : seTtempProduct(products);
   }, [products, searchValue]);
   return (
     <div className="item-root">

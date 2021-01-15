@@ -7,15 +7,11 @@ export default (key, value) => {
   switch (key) {
     case "First":
       return value && value.length < 3;
-      break;
     case "Last":
       return value && value.length < 3;
-      break;
     case "Email":
       return emailregx.test(value) ? false : true;
-      break;
     case "Password":
       return value && value.length < 8;
-      break;
   }
 };

@@ -49,15 +49,17 @@ const OrderList = () => {
     OrderHelper.GetOrders()
       .then(async (pd) => {
         console.log("order ", pd);
-
-        pd.map((v, i) => {
-          v.id = i + 1;
-          v.products.map((prd) => {
-            prd.orderId = v.orderId;
-            setProduct((prevProduct) => [...prevProduct, prd]);
+        if (rowData.length > 0) return 0;
+        else {
+          pd.map((v, i) => {
+            v.id = i + 1;
+            v.products.map((prd) => {
+              prd.orderId = v.orderId;
+              setProduct((prevProduct) => [...prevProduct, prd]);
+            });
           });
-        });
-        setRowData(pd);
+          setRowData(pd);
+        }
         setState(true);
       })
       .catch((err) => {
@@ -67,7 +69,7 @@ const OrderList = () => {
 
   return (
     <div>
-      {console.log(state, "headers--==- ", product)}
+      {/* {console.log(state, "headers--==- ", product)} */}
       {state ? (
         <div>
           <div className="export-data">

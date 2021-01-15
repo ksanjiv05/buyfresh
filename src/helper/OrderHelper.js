@@ -6,6 +6,7 @@ const db = firebase.firestore();
 
 const OrderHelper = {
   CreateOrder: async function CreateOrder(data, callback) {
+    console.log("oreder to create ", data);
     const orderuid = uuidv4();
     data.orderId = orderuid;
     await db

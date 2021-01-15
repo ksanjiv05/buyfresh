@@ -86,7 +86,9 @@ const AddAddress = (props) => {
       <div className="account-right">
         <div style={{ padding: "4px 15px 15px 15px" }}>
           <InputWithoutIcon
-            isError={address && address.name && address.name.length < 3}
+            isError={
+              address && address.name && address.name.length < 3 ? true : false
+            }
             errorMsg={
               address && address.name && address.name.length < 3
                 ? "Please enter valid name"
@@ -103,7 +105,11 @@ const AddAddress = (props) => {
             handleChange={handleChange}
           />
           <InputWithoutIcon
-            isError={address && address.socity && address.socity.length < 3}
+            isError={
+              address && address.socity && address.socity.length < 3
+                ? true
+                : false
+            }
             errorMsg={
               address && address.socity && address.socity.length < 3
                 ? "Please enter valid input"
@@ -122,11 +128,13 @@ const AddAddress = (props) => {
             className={classes.selectEmpty}
             style={{ width: "99%" }}
             inputProps={{ "aria-label": "Without label" }}>
-            <MenuItem value="" disabled>
+            {/* <MenuItem value="" disabled>
               Select Village
-            </MenuItem>
-            {Villages.map((value) => (
-              <MenuItem value={value}>{value}</MenuItem>
+            </MenuItem> */}
+            {Villages.map((value, i) => (
+              <MenuItem key={i} value={value}>
+                {value}
+              </MenuItem>
             ))}
           </Select>
 
@@ -165,7 +173,11 @@ const AddAddress = (props) => {
           <InputWithoutIcon
             lable="Phone"
             name="phone"
-            isError={address && address.phone && address.phone.length < 10}
+            isError={
+              address && address.phone && address.phone.length < 10
+                ? true
+                : false
+            }
             errorMsg={
               address && address.phone && address.phone.length < 10
                 ? "Please enter valid phone number"

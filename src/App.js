@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
+import jwtDecode from "jwt-decode";
 import "./App.css";
 import Index from "./components/Index";
-
 import Auth from "./auth/Auth";
 import Context from "./Context";
 
@@ -21,10 +22,32 @@ class App extends Component {
       searchValue: "",
       cartValue: 0,
       loding: true,
-      isAdmin: false,
+      // isAdmin: false,
       isAuthenticate: false,
     };
     this.auth = new Auth(this.props.history);
+    this.auth.auth0.onIdTokenChanged((user) => {
+      if (user) {
+        this.setState({ isAuthenticate: true });
+        user.getIdToken().then((token) => {
+          const decodedToken = jwtDecode(token);
+
+          // this.state.isAdmin = decodedToken.admin ? true : false;
+          // this.setState({ isAdmin: decodedToken.admin });
+          console.log(
+            this.props.history,
+            "decodedToken.isAdmin",
+            decodedToken.admin
+          );
+        });
+        sessionStorage.setItem("phoneNumber", user.phoneNumber);
+        sessionStorage.setItem("uid", user.uid);
+        console.log("user loged in");
+      } else {
+        this.setState({ isAuthenticate: false });
+        this.auth.auth0.signOut();
+      }
+    });
   }
 
   async componentDidMount() {
@@ -44,30 +67,6 @@ class App extends Component {
       this.setState({ loding: false });
     });
     //}
-    console.log("access token", sessionStorage.getItem("accessToken"));
-    let token = sessionStorage.getItem("accessToken");
-    if (!token) {
-      this.auth.refreshToken((validUser) => {
-        console.log("user refres ", validUser);
-        this.setState({ isAuthenticate: validUser });
-      });
-    } else {
-      this.auth.isSinghedIn();
-      let isValidToken = this.auth.decodeToken(token);
-      if (isValidToken) {
-        console.log("token is valid");
-        this.setState({ isAuthenticate: true });
-      } else {
-        this.setState({ isAuthenticate: false });
-        this.auth.refreshToken();
-        token = sessionStorage.getItem("accessToken");
-        if (await this.auth.decodeToken(token))
-          this.setState({ isAuthenticate: true });
-
-        // (window.location.href = "/login")
-      }
-    }
-
     // this.setState({ loding: false });
   }
 
@@ -142,7 +141,6 @@ class App extends Component {
           addCartValue: this.addCartValue,
           auth: this.auth,
           clearCart: this.clearCart,
-          //isSingIn: this.auth.isSinghedIn,
         }}>
         <SnackbarProvider maxSnack={3}>
           {/* {this.state.loding ? (
@@ -152,11 +150,11 @@ class App extends Component {
           ) : (
             <Index />
           )} */}
-          {/* {this.state.loding ? (
+          {this.state.loding ? (
             <Spinner />
-          ) : ( */}
-          <Index isAuthenticate={this.state.isAuthenticate} />
-          {/* )} */}
+          ) : (
+            <Index isAuthenticate={this.state.isAuthenticate} />
+          )}
         </SnackbarProvider>
       </Context.Provider>
     );

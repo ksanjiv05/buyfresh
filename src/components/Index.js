@@ -16,6 +16,7 @@ import Orders from "./pages/orders/Orders";
 import MobileLogin from "./pages/authentication/MobileLogin";
 import AdminIndex from "./admin/AdminIndex";
 import AuthRoute from "./AuthRoute";
+import AdminDashboard from "./admin/AdminDashboard";
 
 const Index = ({ isAuthenticate }) => {
   const [state, setState] = React.useState(false);
@@ -41,8 +42,18 @@ const Index = ({ isAuthenticate }) => {
           <Route exact path="/cart" render={(props) => <Cart />} />
           <Route exact path="/reg" render={(props) => <NewRegister />} />
           <Route exact path="/login" render={(props) => <MobileLogin />} />
-          <Route exect path="/admin/login" render={(props) => <AdminIndex />} />
+          <Route
+            exect
+            path="/admin/dashboard"
+            render={(props) => <AdminDashboard />}
+          />
 
+          {/* <AuthRoute
+            exact
+            path="/admin/dashboard"
+            authenticated={isAuthenticate}
+            component={<AdminIndex />}
+          /> */}
           <AuthRoute
             exact
             path="/checkout"

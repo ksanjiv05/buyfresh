@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AdminIndex() {
+export default function AdminDashboard() {
   const { isAdmin, isAuthenticate } = useContext(Context);
   const history = useHistory();
   const [loading, setLoading] = useState(false);

@@ -62,18 +62,18 @@ const AccountProfile = (props) => {
     // auth.isSinghedIn();
     if (!isAuthenticate) history.push("/login");
     setLoder(true);
-
-    console.log(loder, "user data", data);
+    // console.log(loder, "user data", data);
     if (!sessionStorage.getItem("uid")) {
       console.log("uid empty");
-      return;
+      // return;
     } else {
       const userData = await UserUtil.GetUser(sessionStorage.getItem("uid"));
+
       setData(userData);
       setImageUrl(data && data.photoURL);
     }
     setLoder(false);
-  }, [isAuthenticate]);
+  }, [isAuthenticate, history]);
 
   return loder ? (
     <Spinner />
@@ -97,6 +97,7 @@ const AccountProfile = (props) => {
             width="50%"
             height="50%"
             style={{ borderRadius: "100%" }}
+            alt="user logo"
           />
           <Button
             variant="contained"
