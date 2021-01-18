@@ -28,11 +28,11 @@ class App extends Component {
     this.auth = new Auth(this.props.history);
     this.auth.auth0.onIdTokenChanged((user) => {
       if (user) {
+        console.log("-----------------user auth--------------------");
         this.setState({ isAuthenticate: true });
         user.getIdToken().then((token) => {
           const decodedToken = jwtDecode(token);
-
-          // this.state.isAdmin = decodedToken.admin ? true : false;
+          this.state.isAdmin = decodedToken.admin ? true : false;
           // this.setState({ isAdmin: decodedToken.admin });
           console.log(
             this.props.history,
@@ -44,6 +44,7 @@ class App extends Component {
         sessionStorage.setItem("uid", user.uid);
         console.log("user loged in");
       } else {
+        console.log("-----------------user unauth--------------------");
         this.setState({ isAuthenticate: false });
         this.auth.auth0.signOut();
       }
@@ -120,7 +121,7 @@ class App extends Component {
       this.auth.singOut();
       sessionStorage.removeItem("phoneNumber");
       sessionStorage.removeItem("uid");
-      sessionStorage.removeItem("accessToken");
+      // sessionStorage.removeItem("accessToken");
       this.setState({ isAuthenticate: false });
       console.log("User singout successfully");
     } catch (err) {
@@ -150,11 +151,11 @@ class App extends Component {
           ) : (
             <Index />
           )} */}
-          {this.state.loding ? (
+          {/* {this.state.loding ? (
             <Spinner />
-          ) : (
-            <Index isAuthenticate={this.state.isAuthenticate} />
-          )}
+          ) : ( */}
+          <Index isAuthenticate={this.state.isAuthenticate} />
+          {/* )} */}
         </SnackbarProvider>
       </Context.Provider>
     );

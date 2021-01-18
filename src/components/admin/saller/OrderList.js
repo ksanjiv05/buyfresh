@@ -73,9 +73,17 @@ const OrderList = () => {
       {state ? (
         <div>
           <div className="export-data">
-            <ExportCSV headers={header} data={rowData} />
+            <ExportCSV
+              headers={header}
+              filename="order-details.csv"
+              data={rowData}
+            />
 
-            <ExportCSV headers={ProductHeader} data={product} />
+            <ExportCSV
+              headers={ProductHeader}
+              filename="ordered-product-details.csv"
+              data={product}
+            />
           </div>
           <div className="data-grid">
             <DataGridList loading={!state} columns={header} rows={rowData} />

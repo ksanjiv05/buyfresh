@@ -15,6 +15,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import Search from "./Search";
 import Login from "../authentication/Login";
 import "./Header.css";
+import logo from "./buyfresh_logo_2_-removebg-preview.png";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -77,9 +78,12 @@ export default function Header(props) {
           <div className={classes.sectionDesktop}>
             <Typography className={classes.title} variant="h6" noWrap>
               <div
-                style={{ display: "inline-table", cursor: "pointer" }}
+                style={{ display: "flex", cursor: "pointer" }}
                 onClick={() => history.push("/")}>
-                Material-UI
+                <img src={logo} alt="logo" width="62" />
+                <h1 style={{ fontSize: "20px", fontFamily: "cursive" }}>
+                  Buy Fresh
+                </h1>
               </div>
             </Typography>
           </div>

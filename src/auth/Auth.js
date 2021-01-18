@@ -74,7 +74,7 @@ export default class Auth {
         const user = result.user;
         let data = {};
         user.getIdToken().then((token) => {
-          sessionStorage.setItem("accessToken", token);
+          // sessionStorage.setItem("accessToken", token);
         });
         sessionStorage.setItem("phoneNumber", user.phoneNumber);
         sessionStorage.setItem("uid", user.uid);
@@ -217,7 +217,7 @@ export default class Auth {
       if (user) {
         console.log("user ref ", user);
         user.getIdToken().then((token) => {
-          sessionStorage.setItem("accessToken", token);
+          // sessionStorage.setItem("accessToken", token);
           const status = this.decodeToken(token);
           console.log("status token user ", status);
           callback(status);

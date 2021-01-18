@@ -2,7 +2,7 @@ import { CSVLink } from "react-csv";
 
 import React from "react";
 
-const ExportCSV = ({ headers, data }) => {
+const ExportCSV = ({ headers, data, filename }) => {
   // const headers = [
   //   { label: "First Name", key: "firstname" },
   //   { label: "Last Name", key: "lastname" },
@@ -33,7 +33,7 @@ const ExportCSV = ({ headers, data }) => {
 
   return (
     <div>
-      <CSVLink data={data} headers={headers}>
+      <CSVLink data={data} filename={filename} headers={headers}>
         Download me
       </CSVLink>
     </div>

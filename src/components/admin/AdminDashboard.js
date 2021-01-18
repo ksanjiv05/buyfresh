@@ -87,7 +87,7 @@ export default function AdminDashboard() {
       history.push("/login");
     }
     console.log(isAuthenticate, "--authh--", isAdmin);
-  }, [isAuthenticate]);
+  }, [isAuthenticate, isAdmin]);
   return isAdmin ? (
     <>
       <div className={classes.root}>

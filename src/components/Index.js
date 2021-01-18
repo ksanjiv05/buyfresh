@@ -42,6 +42,7 @@ const Index = ({ isAuthenticate }) => {
           <Route exact path="/cart" render={(props) => <Cart />} />
           <Route exact path="/reg" render={(props) => <NewRegister />} />
           <Route exact path="/login" render={(props) => <MobileLogin />} />
+          <Route exact path="/admin/index" render={(props) => <AdminIndex />} />
           <Route
             exect
             path="/admin/dashboard"
