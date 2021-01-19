@@ -8,6 +8,8 @@ const timeSlot = [
 const days = ["Today", "Tomorrow"];
 const hours = new Date().getHours();
 const chours = hours > 12 ? hours - 12 : hours;
+const today = new Date();
+today.setDate(new Date().getDate() + 1);
 const TimeSlot = (props) => {
   return (
     <div className="checkout-container">
@@ -16,7 +18,9 @@ const TimeSlot = (props) => {
         {days.map((day, index) => {
           return (
             <div key={day} style={{ marginRight: "30px" }}>
-              <h2>{day}</h2>
+              <h2>
+                {index == 0 ? new Date().toDateString() : today.toDateString()}
+              </h2>
               {timeSlot.map((v, i) => {
                 let slot = "slot" + (i + 1);
                 let tm = parseInt(v[slot].slice(0, 2));
@@ -33,12 +37,14 @@ const TimeSlot = (props) => {
                       disabled={
                         index == 1
                           ? false
-                          : hours > 12 && v[slot].charAt(5) == "P"
-                          ? parseInt(v[slot].slice(0, 2)) >= chours
+                          : hours < 12
+                          ? parseInt(v[slot].slice(0, 2)) > hours
                             ? false
                             : true
-                          : parseInt(v[slot].slice(0, 2)) >= chours
-                          ? false
+                          : v[slot].charAt(5) == "P"
+                          ? parseInt(v[slot].slice(0, 2)) > chours
+                            ? false
+                            : true
                           : true
                       }
                       key={i}

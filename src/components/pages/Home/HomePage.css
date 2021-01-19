@@ -22,8 +22,7 @@
 @media screen and (max-width: 480px) {
   .item-root {
     min-height: calc(100vh - 100px);
-    display: table-cell;
-
+    display: block;
     margin: 0px;
   }
   .item-filter {
@@ -43,6 +42,6 @@
   }
   .items {
     margin: 3px 5px 2px 5px;
-    display: table-cell;
+    /* display: table-cell; */
   }
 }

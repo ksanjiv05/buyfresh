@@ -10,6 +10,7 @@ import Context from "./Context";
 import Spinner from "./components/molecules/Spinner";
 
 import ProductHelper from "./helper/ProductHelper";
+import PopUp from "./PopUp";
 
 class App extends Component {
   constructor(props) {
@@ -154,6 +155,8 @@ class App extends Component {
           {/* {this.state.loding ? (
             <Spinner />
           ) : ( */}
+
+          <PopUp />
           <Index isAuthenticate={this.state.isAuthenticate} />
           {/* )} */}
         </SnackbarProvider>

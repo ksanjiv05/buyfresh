@@ -8,6 +8,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import InputIcon from "@material-ui/icons/Input";
 import HelpIcon from "@material-ui/icons/Help";
+import AndroidIcon from "@material-ui/icons/Android";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -95,6 +96,21 @@ const DrawerList = (props) => {
           </ListItemIcon>
           <ListItemText primary="Help" />
         </ListItem>
+        <div
+          onClick={() =>
+            (window.location.href =
+              "https://firebasestorage.googleapis.com/v0/b/buyfreshbro.appspot.com/o/app-release.apk?alt=media&token=c53574e0-abba-43f8-925e-b5f17b54ba17")
+          }>
+          <ListItem button>
+            <ListItemIcon>
+              <AndroidIcon />
+            </ListItemIcon>
+            <ListItemText primary="Download" />
+          </ListItem>
+        </div>
+      </List>
+      <Divider />
+      <List>
         <div
           onClick={() => (isAuthenticate ? singOut() : history.push("/login"))}>
           <ListItem button>
