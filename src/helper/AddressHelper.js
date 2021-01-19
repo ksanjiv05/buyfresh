@@ -1,5 +1,6 @@
 import firebase from "../config/firebase";
 import DatabaseCollections from "../helper/Constants";
+import StoreUsers from "./StoreUsers";
 import { v4 as uuidv4 } from "uuid";
 const db = firebase.firestore();
 
@@ -52,6 +53,20 @@ const AddressUtil = {
       console.log("Document data:", doc.data());
       return doc.data();
     }
+  },
+  DeleteAddress: async function DeleteAddress(data, callback) {
+    console.log(data);
+    const addressRef = db
+      .collection(DatabaseCollections.Addresses)
+      .doc(data.addressId);
+    await addressRef.delete().then((success) => {
+      StoreUsers.UpdateUserAddress(data, (status) => {
+        console.log("status is ", status);
+        callback(status);
+      }).catch((err) => {
+        console.log(err);
+      });
+    });
   },
 };
 

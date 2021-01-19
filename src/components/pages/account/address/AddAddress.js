@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -38,6 +39,7 @@ const AddAddress = (props) => {
     phone: "",
   });
   const [progress, setProgress] = useState(false);
+  const history = useHistory();
   const handleChange = (ev) => {
     const { name, value } = ev.target;
     setAddress((prevData) => ({
@@ -70,12 +72,14 @@ const AddAddress = (props) => {
     }
     setProgress(true);
     const data = { uid: sessionStorage.getItem("uid"), address: address };
-    console.log("909000");
     addressHelper.StoreAddress(data, (status) => {
       setProgress(false);
-      status
-        ? props.success("Address added successfully")
-        : props.error("Address unable to add");
+      if (status) {
+        props.success("Address added successfully");
+        history.goBack();
+      } else {
+        props.error("Address unable to add");
+      }
     });
   };
 

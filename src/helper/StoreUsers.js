@@ -44,6 +44,22 @@ const UserUtil = {
         callback(false);
       });
   },
+  UpdateUserAddress: async function UpdateUserAddress(data, callback) {
+    await db
+      .collection(DatabaseCollections.Users)
+      .doc(data.uid)
+      .update({
+        addresses: firebase.firestore.FieldValue.arrayRemove(data.addressId),
+      })
+      .then((result) => {
+        console.log("User address update successfully ");
+        callback(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        callback(false);
+      });
+  },
 
   GetUser: async function GetUser(uid) {
     const userRef = db.collection(DatabaseCollections.Users).doc(uid);

@@ -30,7 +30,9 @@
   border-radius: 2%;
   box-shadow: 4px 5px 6px #d6cfcfe6;
 }
-
+.time-slot-flex {
+  display: flex;
+}
 @media screen and (max-width: 480px) {
   .card-root {
     width: 50%;
@@ -40,5 +42,8 @@
   }
   .optionGroup {
     /* display: inline-block; */
+  }
+  .time-slot-flex {
+    display: block;
   }
 }

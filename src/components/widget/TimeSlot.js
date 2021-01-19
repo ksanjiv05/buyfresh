@@ -12,7 +12,7 @@ const TimeSlot = (props) => {
   return (
     <div className="checkout-container">
       <h1 style={{ color: "#717477" }}>Choose Time Slot </h1>
-      <div style={{ display: "flex" }}>
+      <div className="time-slot-flex">
         {days.map((day, index) => {
           return (
             <div key={day} style={{ marginRight: "30px" }}>
