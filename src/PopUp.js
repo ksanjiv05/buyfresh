@@ -1,8 +1,20 @@
-import React from "react";
-import download from "./download_button-removebg-preview.png";
+import React, { useEffect, useState } from "react";
+import firebase from "./config/firebase";
 
+import download from "./download_button-removebg-preview.png";
+const db = firebase.firestore();
 const PopUp = () => {
   const [close, setClose] = React.useState(false);
+  const [data, setData] = useState({});
+  useEffect(async () => {
+    const docRef = db.collection("UpdateApp").doc("1Qc3M6Ym2vEFq6X5yezC");
+    const doc = await docRef.get();
+    // console.log(doc.data(), "data popup--------- ", doc);
+    if (doc.exists) {
+      setData(doc.data());
+      console.log("data popup ", doc.data());
+    }
+  }, []);
   return (
     <div className="first-window" style={{ display: close ? "none" : "block" }}>
       <div className="first-window-close" onClick={() => setClose(true)}>
@@ -10,11 +22,8 @@ const PopUp = () => {
       </div>
       <div
         className="download"
-        onClick={() =>
-          (window.location.href =
-            "https://firebasestorage.googleapis.com/v0/b/buyfreshbro.appspot.com/o/app-release.apk?alt=media&token=c53574e0-abba-43f8-925e-b5f17b54ba17")
-        }>
-        <img src={download} className="download-img" />
+        onClick={() => (window.location.href = data && data.apk)}>
+        <img src={data && data.apklinkimg} className="download-img" />
       </div>
     </div>
   );

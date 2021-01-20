@@ -6,14 +6,35 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import CustomIconButton from "./CustomIconButton";
+import SimpleModal from "../widget/CustomModel";
+import EditProduct from "./EditProduct";
 
 const ProductList = () => {
   const [rowData, setRowData] = useState([]);
+  const [open, setOpen] = React.useState(false);
   const [state, setState] = useState(true);
   const [isUpdate, setIsUpdate] = useState(false);
-  const handleClick = (id) => {
-    console.log("nfghj", id);
-    alert("bro " + id);
+  const [data, setData] = useState({
+    pname: "",
+    ProductId: "",
+    stock: "",
+    price: "",
+    unit: "",
+  });
+
+  const handleClick = (value) => {
+    console.log("nfghj", value.row);
+    const { ProductId, pname, price, unit, stock } = value.row;
+    setData({ ProductId, pname, price, unit, stock });
+    setOpen(true);
+  };
+  const handleChange = (ev) => {
+    const { name, value } = ev.target;
+    console.log(value, data);
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
   const handleDelete = (id) => {
     setState(true);
@@ -98,9 +119,36 @@ const ProductList = () => {
       });
   }, [isUpdate]);
 
+  const handleUpdateProduct = () => {
+    console.log("product updated", data);
+    ProductHelper.UpdateProduct(data.ProductId, data, (status) => {
+      if (status) {
+        alert("product updated");
+        setIsUpdate(!isUpdate);
+        setOpen(false);
+      } else {
+        alert("product updateding failed");
+      }
+    });
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div>
       <DataGridList loading={state} rows={rowData} columns={datax.columns} />
+      <SimpleModal
+        open={open}
+        handleClose={handleClose}
+        body={
+          <EditProduct
+            handleChange={handleChange}
+            data={data}
+            updateProduct={handleUpdateProduct}
+          />
+        }
+      />
     </div>
   );
 };

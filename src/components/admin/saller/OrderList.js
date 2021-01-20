@@ -5,6 +5,7 @@ import DataGridList from "../saller/DataGridList";
 
 const OrderList = () => {
   const [rowData, setRowData] = useState([]);
+  const [plotData, setPlotData] = useState([]);
   const [product, setProduct] = useState([]);
   const [state, setState] = useState(true);
   const [isUpdate, setIsUpdate] = useState(false);
@@ -43,6 +44,23 @@ const OrderList = () => {
     { label: "Unit ", key: "unit" },
     { label: "Product Img ", key: "productImg" },
   ];
+  const datax = {
+    columns: [
+      { field: "orderId", hide: true },
+
+      { field: "time", headerName: "Order Time ", width: 210 },
+      { field: "timeslot", headerName: "Time Slot ", width: 100 },
+      { field: "totalQuntity", headerName: "Total Quntity ", width: 120 },
+      { field: "cartValue", headerName: "Order Value ", width: 210 },
+      { field: "orderStatus", headerName: "Order Status  ", width: 110 },
+      { field: "paymentMod", headerName: "Payment Mod ", width: 110 },
+      {
+        field: "action",
+        headerName: "Action",
+        width: 150,
+      },
+    ],
+  };
 
   useEffect(async () => {
     setState(false);
@@ -57,6 +75,20 @@ const OrderList = () => {
               prd.orderId = v.orderId;
               setProduct((prevProduct) => [...prevProduct, prd]);
             });
+
+            setPlotData((prevProduct) => [
+              ...prevProduct,
+              {
+                id: v.id,
+                time: v.time,
+                timeslot: v.timeslot,
+                totalQuntity: v.totalQuntity,
+                cartValue: v.cartValue,
+                orderId: v.orderId,
+                orderStatus: v.orderStatus,
+                paymentMod: v.paymentMod,
+              },
+            ]);
           });
           setRowData(pd);
         }
@@ -76,6 +108,7 @@ const OrderList = () => {
             <ExportCSV
               headers={header}
               filename="order-details.csv"
+              // name="Order Details Export"
               data={rowData}
             />
 
@@ -86,7 +119,11 @@ const OrderList = () => {
             />
           </div>
           <div className="data-grid">
-            <DataGridList loading={!state} columns={header} rows={rowData} />
+            <DataGridList
+              loading={!state}
+              columns={datax.columns}
+              rows={plotData}
+            />
           </div>
         </div>
       ) : (
