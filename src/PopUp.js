@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import firebase from "./config/firebase";
-
-import download from "./download_button-removebg-preview.png";
 const db = firebase.firestore();
+
 const PopUp = () => {
   const [close, setClose] = React.useState(false);
   const [data, setData] = useState({});
@@ -16,14 +15,18 @@ const PopUp = () => {
     }
   }, []);
   return (
-    <div className="first-window" style={{ display: close ? "none" : "block" }}>
-      <div className="first-window-close" onClick={() => setClose(true)}>
-        X
-      </div>
+    <div style={{ display: data && data.isShow ? "block" : "none" }}>
       <div
-        className="download"
-        onClick={() => (window.location.href = data && data.apk)}>
-        <img src={data && data.apklinkimg} className="download-img" />
+        className="first-window"
+        style={{ display: close ? "none" : "block" }}>
+        <div className="first-window-close" onClick={() => setClose(true)}>
+          X
+        </div>
+        <div
+          className="download"
+          onClick={() => (window.location.href = data && data.apk)}>
+          <img src={data && data.apklinkimg} className="download-img" />
+        </div>
       </div>
     </div>
   );

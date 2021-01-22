@@ -71,6 +71,15 @@ const ProductHelper = {
       snapshot.forEach((doc) => products.push(doc.data()));
     });
 
+    // productRef.onSnapshot(function (doc) {
+    //   console.log(doc.docs, "++++++++++++");
+    //   doc.docs.forEach((v) => {
+    //     // if (v.exists) {
+    //     // console.log("data updated ", v.data());
+    //     products.push(v.data());
+    //     // }
+    //   });
+    // });
     // products.push(
     //   snapshot.forEach((doc) => {
     //     console.log(doc.id, "=>", doc.data());
@@ -94,6 +103,12 @@ const ProductHelper = {
         console.log("err", err);
         callback(false);
       });
+  },
+
+  Observer: function Observer() {
+    db.collection(DatabaseCollections.Products).onSnapshot(function (doc) {
+      console.log("Current data: ", doc.data());
+    });
   },
 };
 

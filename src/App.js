@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import jwtDecode from "jwt-decode";
@@ -12,7 +12,7 @@ import Spinner from "./components/molecules/Spinner";
 import ProductHelper from "./helper/ProductHelper";
 import PopUp from "./PopUp";
 
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -59,20 +59,43 @@ class App extends Component {
       this.setState({
         totalQuntity: documentData.totalQuntity,
         totalCart: documentData.totalCart,
-        // products: documentData.products,
+        products: documentData.products,
       });
+      console.log("local storage ", documentData.products);
       this.setState({ loding: false });
+    } else {
+      ProductHelper.GetProducts().then((pd) => {
+        console.log("Products   ------", pd);
+        this.setState({ products: pd });
+        this.setState({ loding: false });
+        localStorage.setItem("cartItemxx", JSON.stringify(this.state));
+      });
     }
-    ProductHelper.GetProducts().then((pd) => {
-      console.log("Products   ------", pd);
-      this.setState({ products: pd });
-      this.setState({ loding: false });
-    });
     //}
     // this.setState({ loding: false });
   }
 
+  listenProductUpdate = (product) => {
+    console.log("product -", product);
+    if (product) {
+      this.state.products.map((p) => {
+        if (product.ProductId === p.ProductId) {
+          p.price = product.price;
+        }
+      });
+    }
+    this.state.totalCart.map((v) => {
+      if (product.ProductId === v.ProductId) {
+        v.price = product.price;
+      }
+    });
+
+    localStorage.setItem("cartItemxx", JSON.stringify(this.state));
+  };
+
   addToCart = (cart) => {
+    console.log("cart is -- ", cart);
+
     let totalCart = this.state.totalCart;
     if (cart.ProductId === "") return;
     if (totalCart.length === 0 && cart.ProductId !== "") totalCart.push(cart);
@@ -137,10 +160,12 @@ class App extends Component {
       <Context.Provider
         value={{
           ...this.state,
+
           addToCart: this.addToCart,
           handleSearch: this.handleSearch,
           singOut: this.singOut,
           addCartValue: this.addCartValue,
+          listenProductUpdate: this.listenProductUpdate,
           auth: this.auth,
           clearCart: this.clearCart,
         }}>
