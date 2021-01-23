@@ -12,7 +12,6 @@ const AddressUtil = {
       .doc(addressuid)
       .set(data)
       .then((result) => {
-        console.log("Address added successfully ");
         const userData = {
           addressid: addressuid,
           uid: data.uid,
@@ -23,7 +22,7 @@ const AddressUtil = {
         });
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         callback(false);
       });
   },
@@ -35,11 +34,10 @@ const AddressUtil = {
         addresses: firebase.firestore.FieldValue.arrayUnion(data.addressid),
       })
       .then((result) => {
-        console.log("User update successfully ");
         callback(true);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         callback(false);
       });
   },
@@ -48,23 +46,20 @@ const AddressUtil = {
     const userRef = db.collection(DatabaseCollections.Addresses).doc(uid);
     const doc = await userRef.get();
     if (!doc.exists) {
-      console.log("No such document!");
+      console.log("doc not exist");
     } else {
-      console.log("Document data:", doc.data());
       return doc.data();
     }
   },
   DeleteAddress: async function DeleteAddress(data, callback) {
-    console.log(data);
     const addressRef = db
       .collection(DatabaseCollections.Addresses)
       .doc(data.addressId);
     await addressRef.delete().then((success) => {
       StoreUsers.UpdateUserAddress(data, (status) => {
-        console.log("status is ", status);
         callback(status);
       }).catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
     });
   },

@@ -9,11 +9,9 @@ const FileUploadHelper = {
     fileRef
       .put(data)
       .then((v) => {
-        console.log("Uploaded a file", v.metadata, "---", v.totalBytes);
         v.ref
           .getDownloadURL()
           .then(async (dw) => {
-            console.log("image url", dw);
             callback({ status: true, url: dw });
           })
           .catch((err) => {

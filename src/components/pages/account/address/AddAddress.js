@@ -49,11 +49,6 @@ const AddAddress = (props) => {
   };
 
   const handleAddAddress = () => {
-    console.log(
-      address.name === undefined || (address.name && address.name.length < 4),
-      "address",
-      address
-    );
     if (address.name.length < 3) {
       props.error("Please enter valid name");
       return;

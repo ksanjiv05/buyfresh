@@ -46,7 +46,6 @@ const address = [
 ];
 const Addresses = (props) => {
   const handleSelect = (v) => {
-    console.log(v, "---------");
     props.handleChange("address", v);
   };
   return (

@@ -19,11 +19,11 @@ const TimeSlot = (props) => {
           return (
             <div key={day} style={{ marginRight: "30px" }}>
               <h2>
-                {index == 0 ? new Date().toDateString() : today.toDateString()}
+                {index === 0 ? new Date().toDateString() : today.toDateString()}
               </h2>
               {timeSlot.map((v, i) => {
                 let slot = "slot" + (i + 1);
-                let tm = parseInt(v[slot].slice(0, 2));
+
                 return (
                   <div className="time-slot" key={i}>
                     <input
@@ -35,13 +35,13 @@ const TimeSlot = (props) => {
                       }
                       value={v[slot] + " / " + day}
                       disabled={
-                        index == 1
+                        index === 1
                           ? false
                           : hours < 12
                           ? parseInt(v[slot].slice(0, 2)) > hours
                             ? false
                             : true
-                          : v[slot].charAt(5) == "P"
+                          : v[slot].charAt(5) === "P"
                           ? parseInt(v[slot].slice(0, 2)) > chours
                             ? false
                             : true

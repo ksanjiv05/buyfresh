@@ -22,7 +22,6 @@ const Index = ({ isAuthenticate }) => {
   const [state, setState] = React.useState(false);
 
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log("toggel call");
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")

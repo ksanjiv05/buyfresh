@@ -1,7 +1,10 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import Context from "../../Context";
 
 const AdminIndex = () => {
+  const { isAdmin, isAuthenticate } = useContext(Context);
+  // console.log(isAuthenticate, "is admin------ ", isAdmin);
   const history = useHistory();
   return (
     <div>

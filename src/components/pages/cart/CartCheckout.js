@@ -82,7 +82,6 @@ const CartCheckout = (props) => {
   };
 
   const handleNext = (value) => {
-    console.log(activeStep, "the data value ", data);
     if (activeStep === 0 && data && data.address == null) {
       alert("please choose address");
       return;
@@ -130,7 +129,6 @@ const CartCheckout = (props) => {
         props.error("Order placed failed please try !");
       }
     });
-    console.log("order placed x", order);
 
     // setActiveStep(0);
   };

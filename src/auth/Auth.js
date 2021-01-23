@@ -5,7 +5,6 @@ import userUtil from "../helper/StoreUsers";
 
 export default class Auth {
   constructor(history) {
-    console.log("run--");
     this.history = history;
     //const auth0;
     if (!firebase.apps.length) {
@@ -19,16 +18,13 @@ export default class Auth {
           appId: "1:732112326325:web:9d8ff946adf7465fbf78fc",
         })
         .auth();
-      console.log("i am...");
     } else {
-      console.log("i am else");
       this.auth0 = firebase.app().auth();
     }
     // this.auth = firebase.auth();
   }
 
   signInWithGoogle = (googlprovider) => {
-    console.log("---------------------");
     if (!this.auth0) return;
     this.auth0
       .signInWithPopup(googlprovider)
@@ -37,8 +33,6 @@ export default class Auth {
         var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
-        console.log("user ", token);
-        console.log("user -google-------", user);
         // ...
       })
       .catch(function (error) {
@@ -70,7 +64,7 @@ export default class Auth {
     window.confirmationResult
       .confirm(otp)
       .then(async function (result) {
-        console.log(" User signed in successfully.", result.user);
+        console.log(" User signed in successfully.");
         const user = result.user;
         let data = {};
         user.getIdToken().then((token) => {
@@ -103,13 +97,11 @@ export default class Auth {
     //   window.confirmationResult.verificationId,
     //   otp
     // );
-    // console.log("users cread", credential.toJSON());
     // callback(true);
   };
 
   updateProfile = async (data, callback) => {
     if (!this.auth0) return;
-    console.log("data  --  ", data);
     await this.auth0.currentUser
       .updateProfile(data)
       .then((v) => {
@@ -120,7 +112,6 @@ export default class Auth {
       });
   };
   signInWithFacebook = (provider) => {
-    console.log("---------------------");
     if (!this.auth0) return;
     this.auth0
       .signInWithPopup(provider)
@@ -129,8 +120,6 @@ export default class Auth {
         var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
-        console.log("user ", token);
-        console.log("user --------", user);
         // ...
       })
       .catch(function (error) {
@@ -145,12 +134,10 @@ export default class Auth {
   };
 
   signInWithGitHub = (provider) => {
-    console.log("---------------------");
     if (!this.auth0) return;
     this.auth0
       .signInWithPopup(provider)
       .then(function (result) {
-        console.log(result);
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         var token = result.credential.accessToken;
         // The signed-in user info.
@@ -169,15 +156,13 @@ export default class Auth {
 
   createEmailAndPassword = (email, password, callback) => {
     if (!this.auth0) return;
-
-    console.log("email is ", email, "password ", password);
     this.auth0
       .createUserWithEmailAndPassword(email, password)
       .then((v) => {
         callback(v);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         callback(false);
       });
   };
@@ -185,22 +170,18 @@ export default class Auth {
   signInWithEmailPassword = (email, password, callback) => {
     if (!this.auth0) return;
 
-    console.log("email is ", email, "password ", password);
     this.auth0
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        console.log(user);
         callback(true);
       })
       .catch((err) => {
-        console.log(err);
         callback(false);
       });
   };
 
   singOut = () => {
     if (!this.auth0) return;
-    console.log("-------------++++++++- user singout-------");
     this.auth0.signOut();
   };
 
@@ -208,23 +189,19 @@ export default class Auth {
     if (!this.auth0) return;
     this.auth0.currentUser &&
       this.auth0.currentUser.getIdToken().then((t) => {});
-    console.log("user  ---- ", this.auth0.currentUser);
     return this.auth0.currentUser;
   };
 
   refreshToken = (callback) => {
     this.auth0.onIdTokenChanged((user) => {
       if (user) {
-        console.log("user ref ", user);
         user.getIdToken().then((token) => {
           // sessionStorage.setItem("accessToken", token);
           const status = this.decodeToken(token);
-          console.log("status token user ", status);
           callback(status);
         });
         sessionStorage.setItem("phoneNumber", user.phoneNumber);
         sessionStorage.setItem("uid", user.uid);
-        console.log("user data", sessionStorage.getItem("phoneNumber"));
       } else {
         callback(false);
       }

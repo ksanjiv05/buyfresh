@@ -26,7 +26,6 @@ const NewRegister = (props) => {
 
   const handleChange = (ev) => {
     const { name, value } = ev.target;
-    console.log(value, data);
     setData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -34,7 +33,6 @@ const NewRegister = (props) => {
   };
 
   const handleSave = async () => {
-    console.log("iserror ", isErrors);
     let iser = true;
     for (let key in data) {
       iser = Valid(key, data[key]);
@@ -46,7 +44,6 @@ const NewRegister = (props) => {
       props.error("Please enter valid data ");
       return;
     }
-    console.log(sessionStorage.getItem("uid"), "user data", data);
     if (!sessionStorage.getItem("uid")) {
       props.error("Something went to wrong");
       return;
@@ -98,7 +95,6 @@ const NewRegister = (props) => {
                     ? "Please Enter valid first name"
                     : ""
                 }
-                setIsErrors={setIsErrors}
                 handleChange={handleChange}
               />
               <InputWithoutIcon
@@ -111,7 +107,6 @@ const NewRegister = (props) => {
                     ? "Please Enter valid last name"
                     : ""
                 }
-                setIsErrors={setIsErrors}
                 handleChange={handleChange}
               />
               <InputWithoutIcon

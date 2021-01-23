@@ -7,11 +7,13 @@ const PopUp = () => {
   const [data, setData] = useState({});
   useEffect(async () => {
     const docRef = db.collection("UpdateApp").doc("1Qc3M6Ym2vEFq6X5yezC");
-    const doc = await docRef.get();
-    // console.log(doc.data(), "data popup--------- ", doc);
-    if (doc.exists) {
-      setData(doc.data());
-      console.log("data popup ", doc.data());
+    try {
+      const doc = await docRef.get();
+      if (doc.exists) {
+        setData(doc.data());
+      }
+    } catch (err) {
+      //console.log(err);
     }
   }, []);
   return (

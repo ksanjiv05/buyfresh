@@ -25,9 +25,7 @@ const ProductImageUpload = (props) => {
       return;
     }
     FileUploadHelper.UploadImage(image, (v) => {
-      v.status
-        ? console.log("file uploaded ", v.url)
-        : console.log("Upload failed");
+      v.status ? console.log("file uploaded ") : console.log("Upload failed");
       setIsUpload(true);
       props.setImgUrl(v.url);
     });

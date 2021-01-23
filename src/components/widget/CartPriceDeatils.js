@@ -1,7 +1,6 @@
 import React from "react";
 
 const CartPriceDeatils = ({ subtotal }) => {
-  console.log("subtotal  ", subtotal);
   return (
     <div className="cart-price-details-div">
       <h1>PRICE DETAILS</h1>

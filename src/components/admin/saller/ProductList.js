@@ -23,14 +23,12 @@ const ProductList = () => {
   });
 
   const handleClick = (value) => {
-    console.log("nfghj", value.row);
     const { ProductId, pname, price, unit, stock } = value.row;
     setData({ ProductId, pname, price, unit, stock });
     setOpen(true);
   };
   const handleChange = (ev) => {
     const { name, value } = ev.target;
-    console.log(value, data);
     setData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -115,12 +113,11 @@ const ProductList = () => {
         setState(false);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [isUpdate]);
 
   const handleUpdateProduct = () => {
-    console.log("product updated", data);
     ProductHelper.UpdateProduct(data.ProductId, data, (status) => {
       if (status) {
         alert("product updated");

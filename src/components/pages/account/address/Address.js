@@ -29,7 +29,6 @@ const Address = (props) => {
   };
 
   const handleDelete = (v) => {
-    console.log(sessionStorage.getItem("uid"), "address -- ", v);
     const data = {
       uid: sessionStorage.getItem("uid"),
       addressId: v,

@@ -23,29 +23,21 @@ class App extends PureComponent {
       searchValue: "",
       cartValue: 0,
       loding: true,
-      // isAdmin: false,
+      isAdmin: false,
       isAuthenticate: false,
     };
     this.auth = new Auth(this.props.history);
-    this.auth.auth0.onIdTokenChanged((user) => {
+    this.auth.auth0.onIdTokenChanged(async (user) => {
       if (user) {
-        console.log("-----------------user auth--------------------");
         this.setState({ isAuthenticate: true });
-        user.getIdToken().then((token) => {
+        await user.getIdToken().then((token) => {
           const decodedToken = jwtDecode(token);
-          this.state.isAdmin = decodedToken.admin ? true : false;
-          // this.setState({ isAdmin: decodedToken.admin });
-          console.log(
-            this.props.history,
-            "decodedToken.isAdmin",
-            decodedToken.admin
-          );
+          //this.state.isAdmin = decodedToken.admin ? true : false;
+          this.setState({ isAdmin: decodedToken.admin });
         });
         sessionStorage.setItem("phoneNumber", user.phoneNumber);
         sessionStorage.setItem("uid", user.uid);
-        console.log("user loged in");
       } else {
-        console.log("-----------------user unauth--------------------");
         this.setState({ isAuthenticate: false });
         this.auth.auth0.signOut();
       }
@@ -61,11 +53,9 @@ class App extends PureComponent {
         totalCart: documentData.totalCart,
         products: documentData.products,
       });
-      console.log("local storage ", documentData.products);
       this.setState({ loding: false });
     } else {
       ProductHelper.GetProducts().then((pd) => {
-        console.log("Products   ------", pd);
         this.setState({ products: pd });
         this.setState({ loding: false });
         localStorage.setItem("cartItemxx", JSON.stringify(this.state));
@@ -76,7 +66,6 @@ class App extends PureComponent {
   }
 
   listenProductUpdate = (product) => {
-    console.log("product -", product);
     if (product) {
       this.state.products.map((p) => {
         if (product.ProductId === p.ProductId) {
@@ -94,8 +83,6 @@ class App extends PureComponent {
   };
 
   addToCart = (cart) => {
-    console.log("cart is -- ", cart);
-
     let totalCart = this.state.totalCart;
     if (cart.ProductId === "") return;
     if (totalCart.length === 0 && cart.ProductId !== "") totalCart.push(cart);
@@ -117,7 +104,6 @@ class App extends PureComponent {
       //this.setState((prevData) => ({ ...prevData, totalCart: cart })); //totalCart.push(cart);
     }
 
-    console.log("total cart ", totalCart);
     localStorage.setItem("cartItemxx", JSON.stringify(this.state));
     this.totalQuntityCalc();
   };
@@ -128,7 +114,6 @@ class App extends PureComponent {
     this.setState({ totalQuntity: total });
   };
   addCartValue = (subtotal) => {
-    console.log("total", subtotal);
     this.setState({ cartValue: subtotal });
   };
   handleSearch = (value) => {

@@ -37,7 +37,6 @@ const AddProduct = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const handleChange = (ev) => {
     const { name, value } = ev.target;
-    console.log(value, data);
     setData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -99,7 +98,6 @@ const AddProduct = (props) => {
   };
   const handleProduct = () => {
     data.productImg = imgUrl;
-    console.log("product ", data);
     if (validate()) {
       ProductHelper.CreateProduct(data, (status) => {
         status

@@ -40,12 +40,10 @@ const AccountProfile = (props) => {
       ...prevData,
       [name]: value,
     }));
-    console.log("profile  data ", data);
     setIsUpdate(true);
   };
 
   const handleSave = async () => {
-    console.log("save data ", data);
     setLoderx(true);
 
     data.uid = sessionStorage.getItem("uid");
@@ -62,7 +60,6 @@ const AccountProfile = (props) => {
     // auth.isSinghedIn();
     if (!isAuthenticate) history.push("/login");
     setLoder(true);
-    // console.log(loder, "user data", data);
     if (!sessionStorage.getItem("uid")) {
       console.log("uid empty");
       // return;

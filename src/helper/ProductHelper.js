@@ -12,11 +12,10 @@ const ProductHelper = {
       .doc(Productuid)
       .set(data)
       .then((result) => {
-        console.log("Product added successfully ");
         callback(true);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         callback(false);
       });
   },
@@ -28,11 +27,10 @@ const ProductHelper = {
         Products: firebase.firestore.FieldValue.arrayUnion(data.ProductId),
       })
       .then((result) => {
-        console.log("User update successfully ");
         callback(true);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         callback(false);
       });
   },
@@ -41,22 +39,18 @@ const ProductHelper = {
     const userRef = db.collection(DatabaseCollections.Users).doc(uid);
     const doc = await userRef.get();
     if (!doc.exists) {
-      console.log("No such document!");
       return;
     } else {
-      console.log("Document data:", doc.data());
       return doc.data();
     }
   },
   DeleteProduct: async function DeleteProduct(productId, callback) {
-    console.log("product id com ", productId);
     const productRef = db
       .collection(DatabaseCollections.Products)
       .doc(productId);
     productRef
       .delete()
       .then((v) => {
-        console.log("product delete ", v);
         callback(true);
       })
       .catch((err) => {
@@ -106,9 +100,7 @@ const ProductHelper = {
   },
 
   Observer: function Observer() {
-    db.collection(DatabaseCollections.Products).onSnapshot(function (doc) {
-      console.log("Current data: ", doc.data());
-    });
+    db.collection(DatabaseCollections.Products).onSnapshot(function (doc) {});
   },
 };
 

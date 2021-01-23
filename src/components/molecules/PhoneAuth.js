@@ -32,7 +32,6 @@ const PhoneAuth = (props) => {
   };
   const handleChangeOtp = (value) => {
     setOtp(value);
-    console.log(otp);
   };
 
   const handleSendOTP = () => {
@@ -52,7 +51,6 @@ const PhoneAuth = (props) => {
       );
       const appVerifier = window.appVerifier;
       auth.signInWithPhone("+91" + data, appVerifier, (status) => {
-        console.log("what is v ", status);
         setLoder(false);
         let msg = status ? "OTP successfully send" : "OTP sending failed";
         status ? props.success(msg) : props.error(msg);
@@ -60,7 +58,7 @@ const PhoneAuth = (props) => {
         setState(status);
       });
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       setLoder(false);
     }
   };

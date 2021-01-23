@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import Rating from "@material-ui/lab/Rating";
+// import Rating from "@material-ui/lab/Rating";
 import Context from "../../Context";
 import Button from "@material-ui/core/Button";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
@@ -13,13 +13,12 @@ const CardM = (props) => {
   const { addToCart, totalCart } = useContext(Context);
   const [loding, setLoding] = useState(true);
   const {
-    shortDesc,
     price,
     ProductId,
     pname,
     productImg,
     unit,
-    stock,
+    //stock,
   } = props.value;
   // const [counter, setCounter] = React.useState(10);
   const [cart, setCart] = useState({

@@ -1,17 +1,3 @@
-// import * as React from "react";
-// import AddProduct from "./saller/AddProduct";
-// import ProductList from "./saller/ProductList";
-
-// const AdminIndex = () => {
-//   return (
-//     <div>
-//       <AddProduct />
-//       {/* <ProductList /> */}
-//     </div>
-//   );
-// };
-// export default AdminIndex;
-
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Redirect, useHistory } from "react-router-dom";
@@ -86,7 +72,6 @@ export default function AdminDashboard() {
     if (!isAuthenticate) {
       history.push("/login");
     }
-    console.log(isAuthenticate, "--authh--", isAdmin);
   }, [isAuthenticate, isAdmin]);
   return isAdmin ? (
     <>

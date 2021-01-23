@@ -66,7 +66,6 @@ const OrderList = () => {
     setState(false);
     OrderHelper.GetOrders()
       .then(async (pd) => {
-        console.log("order ", pd);
         if (rowData.length > 0) return 0;
         else {
           pd.map((v, i) => {
@@ -95,7 +94,7 @@ const OrderList = () => {
         setState(true);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 

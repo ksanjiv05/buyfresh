@@ -21,18 +21,18 @@ const HomePage = () => {
   }, [products, searchValue]);
 
   useEffect(() => {
-    firebase
-      .firestore()
-      .collection("Products")
-      .onSnapshot(function (doc) {
-        console.log("Current data:----- ", doc.docChanges());
-        doc.docChanges().forEach((v) => {
-          if (v.doc.exists) {
-            listenProductUpdate(v.doc.data());
-            // console.log(setProductState, "data updated xxxxxs", v.doc.data());
-          }
-        });
+    const db = firebase.firestore();
+    // const fatchdata=async()=>{
+    db.collection("Products").onSnapshot(function (doc) {
+      doc.docChanges().forEach((v) => {
+        if (v.doc.exists) {
+          listenProductUpdate(v.doc.data());
+        }
       });
+    });
+    // }
+    // fatchdata();
+    // return db.terminate()
   }, []);
   return (
     <div className="item-root">

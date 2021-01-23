@@ -6,7 +6,6 @@ const db = firebase.firestore();
 
 const OrderHelper = {
   CreateOrder: async function CreateOrder(data, callback) {
-    console.log("oreder to create ", data);
     const orderuid = uuidv4();
     data.orderId = orderuid;
     await db
@@ -14,7 +13,6 @@ const OrderHelper = {
       .doc(orderuid)
       .set(data)
       .then((result) => {
-        console.log("Order placed successfully ");
         const userData = {
           orderId: orderuid,
           uid: data.uid,
@@ -25,7 +23,7 @@ const OrderHelper = {
         callback(true);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         callback(false);
       });
   },
@@ -37,11 +35,10 @@ const OrderHelper = {
         orders: firebase.firestore.FieldValue.arrayUnion(data.orderId),
       })
       .then((result) => {
-        console.log("User update successfully ");
         callback(true);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         callback(false);
       });
   },
@@ -55,7 +52,6 @@ const OrderHelper = {
 
         const order = await orderRef.get();
         if (order.exists) {
-          console.log("order =", order.data());
           callback(order.data());
         }
       });
@@ -69,7 +65,6 @@ const OrderHelper = {
     });
 
     if (orders.length > 0) {
-      console.log(" data:", orders);
       return orders;
     }
   },
